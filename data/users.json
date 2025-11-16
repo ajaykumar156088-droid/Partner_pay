@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": "admin-001",
+      "email": "admin@partnerpay.com",
+      "password": "$2a$10$xlGBKJMWf2fCBaeBrjQJ4OBfBgmH.k4mwWS17NanEoWuEyC2hA0lK",
+      "role": "admin",
+      "balance": 0
+    },
+    {
+      "id": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "email": "harry@gmail.com",
+      "password": "$2a$10$Xe/qeH0kO4d1SNO0jw2xguKbp3ZBhbbzL1Moz2hWnO.jOXyOlGvVC",
+      "role": "user",
+      "balance": 2000
+    },
+    {
+      "id": "a80f0b4f-d70d-4bf7-a74e-d46661972c4f",
+      "email": "pankajpandit55252@gmail.com",
+      "password": "$2a$10$Fi2vzfrwp1jBsAYOll.ZmeM.wg6NmwcNUT/EPhdKmXU.rJUs8FR42",
+      "role": "user",
+      "balance": 5500
+    }
+  ]
+}
+

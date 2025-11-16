@@ -1,0 +1,85 @@
+{
+  "transactions": [
+    {
+      "id": "63b0f907-f292-41da-b08a-67bc0a2abe10",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 400,
+      "type": "admin_add",
+      "details": "Admin added balance",
+      "timestamp": "2025-11-16T04:58:31.243Z"
+    },
+    {
+      "id": "b09418c0-556d-4413-8001-afdde0cd309b",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 200,
+      "type": "admin_add",
+      "details": "Story on 16/November/2025",
+      "timestamp": "2025-11-16T05:37:17.633Z"
+    },
+    {
+      "id": "a3c4a282-886e-4e99-8cbc-9384a26495e6",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 2000,
+      "type": "admin_add",
+      "details": "For Reel Posting on 16/November/2025",
+      "timestamp": "2025-11-16T05:40:02.238Z"
+    },
+    {
+      "id": "d79422ad-8eee-409d-bd5a-b0da678e2a31",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": -600,
+      "type": "admin_deduct",
+      "details": "Penalty for Delayed Contraction",
+      "timestamp": "2025-11-16T05:41:03.961Z"
+    },
+    {
+      "id": "d168bee6-4534-42bf-ac3c-a207b4fa6be5",
+      "userId": "23721c1e-68b8-4971-abca-ffd9fdb8baa6",
+      "amount": 95000,
+      "type": "admin_add",
+      "details": "Admin added balance",
+      "timestamp": "2025-11-16T05:42:18.120Z"
+    },
+    {
+      "id": "9de75e1c-b6d0-4fe6-937c-56a20a616486",
+      "userId": "23721c1e-68b8-4971-abca-ffd9fdb8baa6",
+      "amount": 500,
+      "type": "admin_add",
+      "details": "Admin added balance",
+      "timestamp": "2025-11-16T06:42:24.041Z"
+    },
+    {
+      "id": "1704b066-6d8c-40b7-a0e0-bb841ea002f3",
+      "userId": "23721c1e-68b8-4971-abca-ffd9fdb8baa6",
+      "amount": 4501,
+      "type": "admin_add",
+      "details": "Admin added balance",
+      "timestamp": "2025-11-16T06:42:35.082Z"
+    },
+    {
+      "id": "7f027d7e-80e4-45dd-9ac5-abcc7f4461b1",
+      "userId": "23721c1e-68b8-4971-abca-ffd9fdb8baa6",
+      "amount": -2,
+      "type": "admin_deduct",
+      "details": "Admin deducted balance",
+      "timestamp": "2025-11-16T06:42:41.668Z"
+    },
+    {
+      "id": "8835b91c-b50f-465e-a750-016c06321304",
+      "userId": "23721c1e-68b8-4971-abca-ffd9fdb8baa6",
+      "amount": 0.99,
+      "type": "admin_add",
+      "details": "Admin added balance",
+      "timestamp": "2025-11-16T06:42:52.865Z"
+    },
+    {
+      "id": "21618076-3473-441c-a73e-6b5765cf4d96",
+      "userId": "a80f0b4f-d70d-4bf7-a74e-d46661972c4f",
+      "amount": 5500,
+      "type": "admin_add",
+      "details": "Signup Bonus",
+      "timestamp": "2025-11-16T07:04:49.428Z"
+    }
+  ]
+}
+
