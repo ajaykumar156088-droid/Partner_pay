@@ -43,7 +43,8 @@ export async function middleware(request: NextRequest) {
   
   // User routes protection (prevent admin from accessing user dashboard)
   if (request.nextUrl.pathname.startsWith('/dashboard') || 
-      request.nextUrl.pathname.startsWith('/withdraw')) {
+      request.nextUrl.pathname.startsWith('/withdraw') ||
+      request.nextUrl.pathname.startsWith('/vouchers')) {
     if (session.role === 'admin') {
       return NextResponse.redirect(new URL('/admin/dashboard', request.url));
     }

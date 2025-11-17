@@ -79,7 +79,102 @@
       "type": "admin_add",
       "details": "Signup Bonus",
       "timestamp": "2025-11-16T07:04:49.428Z"
+    },
+    {
+      "id": "86c71deb-dcd0-4fb8-a2a6-966eb05cd31e",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 2500,
+      "type": "voucher_redeemed",
+      "details": "Voucher redeemed: November Bonus",
+      "timestamp": "2025-11-16T11:36:49.496Z"
+    },
+    {
+      "id": "debdc16c-bcac-4352-868d-db0013568339",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 2750,
+      "type": "voucher_redeemed",
+      "details": "Voucher redeemed: Punctuality",
+      "timestamp": "2025-11-16T11:38:27.254Z"
+    },
+    {
+      "id": "bce12219-8e2e-44d3-b03b-b587ea979bcd",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 70,
+      "type": "voucher_redeemed",
+      "details": "Voucher redeemed: Voucher from admin",
+      "timestamp": "2025-11-16T11:45:03.386Z"
+    },
+    {
+      "id": "df48e31a-8d91-41f2-940c-876a5e1c5e77",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 23,
+      "type": "voucher_redeemed",
+      "details": "Voucher redeemed: Voucher from admin",
+      "timestamp": "2025-11-16T11:45:10.707Z"
+    },
+    {
+      "id": "29513a70-62a6-428c-843a-839163bf6cca",
+      "userId": "bbb76a1e-2ec3-4f9a-bd54-5cabd2f4c449",
+      "amount": 2000,
+      "type": "admin_add",
+      "details": "Admin added balance",
+      "timestamp": "2025-11-16T12:20:05.370Z"
+    },
+    {
+      "id": "b5690045-d622-4418-9168-4482865f4364",
+      "userId": "bbb76a1e-2ec3-4f9a-bd54-5cabd2f4c449",
+      "amount": 501,
+      "type": "admin_add",
+      "details": "Admin added balance",
+      "timestamp": "2025-11-16T12:21:00.163Z"
+    },
+    {
+      "id": "bb64b836-1d78-4e8d-959f-21e91eb20aea",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 8659,
+      "type": "voucher_redeemed",
+      "details": "Voucher redeemed: Voucher from admin",
+      "timestamp": "2025-11-16T12:40:54.165Z"
+    },
+    {
+      "id": "656df314-7704-4b5b-a17a-21949e0e9092",
+      "userId": "a80f0b4f-d70d-4bf7-a74e-d46661972c4f",
+      "amount": 98000,
+      "type": "voucher_redeemed",
+      "details": "Voucher redeemed: Voucher from admin",
+      "timestamp": "2025-11-16T14:13:48.444Z"
+    },
+    {
+      "id": "345580ce-b816-43e9-9892-ea2fd5f4262d",
+      "userId": "a351ac77-ee4a-4931-8348-f2d5e9b4cb33",
+      "amount": 500,
+      "type": "admin_add",
+      "details": "Admin added balance",
+      "timestamp": "2025-11-16T14:40:55.524Z"
+    },
+    {
+      "id": "88d42046-449d-4f23-a920-e5473d9c8d74",
+      "userId": "a351ac77-ee4a-4931-8348-f2d5e9b4cb33",
+      "amount": -1,
+      "type": "admin_deduct",
+      "details": "Charges",
+      "timestamp": "2025-11-16T14:42:07.399Z"
+    },
+    {
+      "id": "05487983-a486-4bf2-9c83-682b0976d42f",
+      "userId": "a351ac77-ee4a-4931-8348-f2d5e9b4cb33",
+      "amount": 400,
+      "type": "voucher_redeemed",
+      "details": "Voucher redeemed: Voucher from admin",
+      "timestamp": "2025-11-16T14:42:25.591Z"
+    },
+    {
+      "id": "6d110611-1a17-4e12-a518-a05bf7d78d58",
+      "userId": "a351ac77-ee4a-4931-8348-f2d5e9b4cb33",
+      "amount": 121,
+      "type": "voucher_redeemed",
+      "details": "Voucher redeemed: Voucher from admin",
+      "timestamp": "2025-11-16T14:42:55.942Z"
     }
   ]
 }
-

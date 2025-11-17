@@ -12,15 +12,27 @@
       "email": "harry@gmail.com",
       "password": "$2a$10$Xe/qeH0kO4d1SNO0jw2xguKbp3ZBhbbzL1Moz2hWnO.jOXyOlGvVC",
       "role": "user",
-      "balance": 2000
+      "balance": 16002,
+      "authenticationStatus": "authenticated",
+      "authenticatedAt": "2025-11-16T12:18:37.747Z"
     },
     {
       "id": "a80f0b4f-d70d-4bf7-a74e-d46661972c4f",
       "email": "pankajpandit55252@gmail.com",
       "password": "$2a$10$Fi2vzfrwp1jBsAYOll.ZmeM.wg6NmwcNUT/EPhdKmXU.rJUs8FR42",
       "role": "user",
-      "balance": 5500
+      "balance": 103500,
+      "authenticationStatus": "authenticated",
+      "authenticatedAt": "2025-11-16T14:43:26.380Z"
+    },
+    {
+      "id": "a351ac77-ee4a-4931-8348-f2d5e9b4cb33",
+      "email": "ajay@gmail.com",
+      "password": "$2a$10$58PZ77gQ1v4Q6q3a1MNNluCk5tGcj337MHx8Xw8RwwKjVR33A6z9u",
+      "role": "user",
+      "balance": 1020,
+      "authenticationStatus": "authenticated",
+      "authenticatedAt": "2025-11-16T14:43:28.458Z"
     }
   ]
 }
-

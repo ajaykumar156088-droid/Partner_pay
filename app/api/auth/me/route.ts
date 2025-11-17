@@ -29,6 +29,8 @@ export async function GET() {
     email: user.email,
     role: user.role,
     balance: user.balance,
+    authenticationStatus: user.authenticationStatus,
+    authenticatedAt: user.authenticatedAt,
   });
 }
 

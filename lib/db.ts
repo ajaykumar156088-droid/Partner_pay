@@ -73,15 +73,29 @@ export interface User {
   password: string;
   role: 'admin' | 'user';
   balance: number;
+  authenticationStatus?: 'pending' | 'authenticated';
+  authenticatedAt?: string;
 }
 
 export interface Transaction {
   id: string;
   userId: string;
   amount: number;
-  type: 'admin_add' | 'admin_deduct' | 'withdraw_attempt';
+  type: 'admin_add' | 'admin_deduct' | 'withdraw_attempt' | 'voucher_redeemed';
   details: string;
   timestamp: string;
+}
+
+export interface Voucher {
+  id: string;
+  userId: string;
+  amount: number;
+  reason: string;
+  status: 'pending' | 'scratched' | 'redeemed';
+  scratchedAt?: string;
+  redeemedAt?: string;
+  createdAt: string;
+  createdBy: string; // admin user id
 }
 
 export interface UsersData {
@@ -90,5 +104,13 @@ export interface UsersData {
 
 export interface TransactionsData {
   transactions: Transaction[];
+}
+
+export interface VouchersData {
+  vouchers: Voucher[];
+}
+
+export interface SettingsData {
+  authenticationLink: string;
 }
 

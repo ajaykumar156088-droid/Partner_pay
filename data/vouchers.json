@@ -1,0 +1,92 @@
+{
+  "vouchers": [
+    {
+      "id": "49a470f7-e404-456a-bfa3-9f00000c06a7",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 2500,
+      "reason": "November Bonus",
+      "status": "redeemed",
+      "createdAt": "2025-11-16T11:32:59.300Z",
+      "createdBy": "admin-001",
+      "scratchedAt": "2025-11-16T11:33:27.298Z",
+      "redeemedAt": "2025-11-16T11:36:49.497Z"
+    },
+    {
+      "id": "c7e69884-c9f7-4049-b266-ab3e8cf20e4b",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 2750,
+      "reason": "Punctuality",
+      "status": "redeemed",
+      "createdAt": "2025-11-16T11:37:44.219Z",
+      "createdBy": "admin-001",
+      "scratchedAt": "2025-11-16T11:38:19.111Z",
+      "redeemedAt": "2025-11-16T11:38:27.255Z"
+    },
+    {
+      "id": "3edbbec9-93bf-4e28-a25c-faed5936f95d",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 23,
+      "reason": "Voucher from admin",
+      "status": "redeemed",
+      "createdAt": "2025-11-16T11:40:36.271Z",
+      "createdBy": "admin-001",
+      "scratchedAt": "2025-11-16T11:45:09.355Z",
+      "redeemedAt": "2025-11-16T11:45:10.707Z"
+    },
+    {
+      "id": "de08c1b6-0a80-4702-9a64-7396435f8fad",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 70,
+      "reason": "Voucher from admin",
+      "status": "redeemed",
+      "createdAt": "2025-11-16T11:40:48.288Z",
+      "createdBy": "admin-001",
+      "scratchedAt": "2025-11-16T11:41:26.855Z",
+      "redeemedAt": "2025-11-16T11:45:03.386Z"
+    },
+    {
+      "id": "513fb04b-9d82-4f7f-8e76-73cf51b59e69",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 8659,
+      "reason": "Voucher from admin",
+      "status": "redeemed",
+      "createdAt": "2025-11-16T12:40:23.436Z",
+      "createdBy": "admin-001",
+      "scratchedAt": "2025-11-16T12:40:52.605Z",
+      "redeemedAt": "2025-11-16T12:40:54.166Z"
+    },
+    {
+      "id": "6039c6f8-3c30-4e55-9c9c-d7edb42d1cff",
+      "userId": "a80f0b4f-d70d-4bf7-a74e-d46661972c4f",
+      "amount": 98000,
+      "reason": "Voucher from admin",
+      "status": "redeemed",
+      "createdAt": "2025-11-16T14:13:04.880Z",
+      "createdBy": "admin-001",
+      "scratchedAt": "2025-11-16T14:13:45.919Z",
+      "redeemedAt": "2025-11-16T14:13:48.444Z"
+    },
+    {
+      "id": "4a4c2bd0-347d-4904-89be-270919d7811a",
+      "userId": "a351ac77-ee4a-4931-8348-f2d5e9b4cb33",
+      "amount": 400,
+      "reason": "Voucher from admin",
+      "status": "redeemed",
+      "createdAt": "2025-11-16T14:41:11.629Z",
+      "createdBy": "admin-001",
+      "scratchedAt": "2025-11-16T14:42:24.017Z",
+      "redeemedAt": "2025-11-16T14:42:25.591Z"
+    },
+    {
+      "id": "90dc11d8-2051-473c-b7f4-a374333f05f5",
+      "userId": "a351ac77-ee4a-4931-8348-f2d5e9b4cb33",
+      "amount": 121,
+      "reason": "Voucher from admin",
+      "status": "redeemed",
+      "createdAt": "2025-11-16T14:42:47.713Z",
+      "createdBy": "admin-001",
+      "scratchedAt": "2025-11-16T14:42:54.228Z",
+      "redeemedAt": "2025-11-16T14:42:55.943Z"
+    }
+  ]
+}
