@@ -93,12 +93,20 @@ export default function AdminVouchersPage() {
                 Manage all scratch vouchers
               </p>
             </div>
-            <Link
-              href="/admin/vouchers/create"
-              className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg transform hover:scale-105 text-sm sm:text-base"
-            >
-              + Create Voucher
-            </Link>
+            <div className="flex gap-3">
+              <Link
+                href="/admin/vouchers/create"
+                className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg transform hover:scale-105 text-sm sm:text-base"
+              >
+                + Create Voucher
+              </Link>
+              <Link
+                href="/admin/vouchers/create?coupon=true"
+                className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg transform hover:scale-105 text-sm sm:text-base"
+              >
+                + Create Coupon
+              </Link>
+            </div>
           </div>
         </div>
 

@@ -88,9 +88,11 @@ export interface Transaction {
 
 export interface Voucher {
   id: string;
-  userId: string;
+  userId?: string;
   amount: number;
   reason: string;
+  // Optional coupon code (if this voucher is a global coupon)
+  code?: string;
   status: 'pending' | 'scratched' | 'redeemed';
   scratchedAt?: string;
   redeemedAt?: string;

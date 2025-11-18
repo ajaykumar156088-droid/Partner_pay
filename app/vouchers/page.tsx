@@ -32,6 +32,7 @@ export default function VouchersPage() {
   const [vouchers, setVouchers] = useState<Voucher[]>([]);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState<string | null>(null);
+  const [codeInput, setCodeInput] = useState('');
 
   useEffect(() => {
     fetchUser();
@@ -153,6 +154,52 @@ export default function VouchersPage() {
     }
   };
 
+  const handleApplyCode = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!codeInput.trim()) return;
+    setProcessing('code');
+
+    try {
+      const response = await fetch('/api/user/vouchers/redeem', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: codeInput.trim() }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        alert(data.error || 'Failed to apply code');
+        return;
+      }
+
+      // If voucher returned and redeemed, update local state and user balance
+      if (data.voucher) {
+        // Add to vouchers list if newly assigned
+        setVouchers(prev => {
+          const exists = prev.find(v => v.id === data.voucher.id);
+          if (exists) {
+            return prev.map(v => v.id === data.voucher.id ? data.voucher : v);
+          }
+          return [data.voucher, ...prev];
+        });
+
+        if (data.voucher.status === 'redeemed') {
+          // optimistic balance update
+          fetchUser();
+          alert(data.message || `Successfully redeemed ₹${data.voucher.amount.toLocaleString('en-IN')}!`);
+        } else {
+          alert(data.message || 'Code applied. Scratch/Redeem as needed.');
+        }
+      }
+    } catch (error) {
+      console.error('Error applying code:', error);
+      alert('Failed to apply code');
+    } finally {
+      setProcessing(null);
+      setCodeInput('');
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -172,6 +219,24 @@ export default function VouchersPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">
           <BackButton href="/dashboard" label="Back to Dashboard" />
+        </div>
+        <div className="mb-6">
+          <form onSubmit={handleApplyCode} className="flex gap-2 max-w-md">
+            <input
+              type="text"
+              placeholder="Enter voucher code"
+              value={codeInput}
+              onChange={(e) => setCodeInput(e.target.value)}
+              className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+            />
+            <button
+              type="submit"
+              disabled={!!processing}
+              className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg disabled:opacity-50"
+            >
+              Apply
+            </button>
+          </form>
         </div>
         <div className="mb-6 sm:mb-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -24,11 +25,23 @@ export default function CreateVoucherPage() {
     userId: '',
     amount: '',
     reason: '',
+    code: '',
+    // whether to create a coupon code (true) or assign to a specific user (false)
+    isCoupon: false,
   });
 
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  // Read query param to pre-select coupon mode when opening from admin list
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const val = searchParams?.get('coupon');
+    if (val === 'true') {
+      setFormData(prev => ({ ...prev, isCoupon: true, userId: '' }));
+    }
+  }, [searchParams]);
 
   const fetchUsers = async () => {
     try {
@@ -55,15 +68,27 @@ export default function CreateVoucherPage() {
     setSubmitting(true);
 
     try {
+      // If creating a coupon and no code provided, generate one
+      let codeToSend = undefined;
+      if (formData.isCoupon) {
+        codeToSend = formData.code && formData.code.trim() ? formData.code.trim() : undefined;
+        if (!codeToSend) {
+          // generate a simple random 10-char alphanumeric code
+          codeToSend = Array.from({ length: 10 }, () => Math.random().toString(36).charAt(2)).join('').toUpperCase();
+        }
+      }
+
       const response = await fetch('/api/admin/vouchers', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: formData.userId,
+          // only include userId when assigning to a specific user
+          userId: formData.isCoupon ? undefined : formData.userId,
           amount: parseFloat(formData.amount),
           reason: formData.reason || 'Voucher from admin',
+          code: codeToSend,
         }),
       });
 
@@ -72,8 +97,8 @@ export default function CreateVoucherPage() {
         throw new Error(data.error || 'Failed to create voucher');
       }
 
-      setSuccess(true);
-      setFormData({ userId: '', amount: '', reason: '' });
+  setSuccess(true);
+  setFormData({ userId: '', amount: '', reason: '', code: '', isCoupon: false });
       
       setTimeout(() => {
         router.push('/admin/vouchers');
@@ -83,6 +108,12 @@ export default function CreateVoucherPage() {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  // helper to generate a code into form
+  const generateCode = () => {
+    const generated = Array.from({ length: 10 }, () => Math.random().toString(36).charAt(2)).join('').toUpperCase();
+    setFormData(prev => ({ ...prev, code: generated }));
   };
 
   if (loading) {
@@ -124,23 +155,66 @@ export default function CreateVoucherPage() {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="userId" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Select User *
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Voucher Type
               </label>
-              <select
-                id="userId"
-                value={formData.userId}
-                onChange={(e) => setFormData({ ...formData, userId: e.target.value })}
-                required
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-              >
-                <option value="">Choose a user...</option>
-                {users.map((user) => (
-                  <option key={user.id} value={user.id}>
-                    {user.email}
-                  </option>
-                ))}
-              </select>
+              <div className="flex items-center gap-4 mb-3">
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="voucherType"
+                    checked={!formData.isCoupon}
+                    onChange={() => setFormData({ ...formData, isCoupon: false })}
+                    className="form-radio"
+                  />
+                  <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Assign to user</span>
+                </label>
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="voucherType"
+                    checked={formData.isCoupon}
+                    onChange={() => setFormData({ ...formData, isCoupon: true, userId: '' })}
+                    className="form-radio"
+                  />
+                  <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Create coupon code</span>
+                </label>
+              </div>
+
+              {!formData.isCoupon ? (
+                <select
+                  id="userId"
+                  value={formData.userId}
+                  onChange={(e) => setFormData({ ...formData, userId: e.target.value })}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="">Choose a user...</option>
+                  {users.map((user) => (
+                    <option key={user.id} value={user.id}>
+                      {user.email}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    id="code"
+                    value={formData.code}
+                    onChange={(e) => setFormData({ ...formData, code: e.target.value })}
+                    placeholder="Enter or generate a code"
+                    className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                  />
+                  <button
+                    type="button"
+                    onClick={generateCode}
+                    className="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg"
+                  >
+                    Generate
+                  </button>
+                </div>
+              )}
             </div>
 
             <div>

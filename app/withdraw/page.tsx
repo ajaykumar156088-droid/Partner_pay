@@ -25,6 +25,7 @@ export default function WithdrawPage() {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const [authLink, setAuthLink] = useState('');
+  const [authenticating, setAuthenticating] = useState(false);
 
   useEffect(() => {
     fetchUser();
@@ -59,19 +60,25 @@ export default function WithdrawPage() {
 
   const handleAuthenticate = async () => {
     if (!authLink) return;
-    
-    // Update status to pending
+
+    // Prevent double-clicks
+    if (authenticating) return;
+
     try {
+      // Set server-side status to pending
       await fetch('/api/user/authenticate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'pending' }),
       });
-      
+
       // Refresh user data
       await fetchUser();
-      
-      // Redirect to authentication link in same tab
+
+      // Set local authenticating state so the same button shows 'Authenticating...'
+      setAuthenticating(true);
+
+      // Redirect current page to the authentication link (same tab)
       window.location.href = authLink;
     } catch (error) {
       console.error('Error updating authentication status:', error);

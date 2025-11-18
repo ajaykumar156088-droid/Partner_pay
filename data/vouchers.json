@@ -87,6 +87,64 @@
       "createdBy": "admin-001",
       "scratchedAt": "2025-11-16T14:42:54.228Z",
       "redeemedAt": "2025-11-16T14:42:55.943Z"
+    },
+    {
+      "id": "3ac05396-e166-4f59-9a01-bf358ccfbcfe",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 5500,
+      "reason": "Voucher from admin",
+      "status": "redeemed",
+      "createdAt": "2025-11-17T16:32:33.501Z",
+      "createdBy": "admin-001",
+      "scratchedAt": "2025-11-17T16:33:14.041Z",
+      "redeemedAt": "2025-11-17T16:33:15.331Z"
+    },
+    {
+      "id": "fe8d10ff-4040-4352-8fad-92ff65dab079",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 4566,
+      "reason": "Voucher from admin",
+      "status": "redeemed",
+      "createdAt": "2025-11-17T16:45:13.396Z",
+      "createdBy": "admin-001",
+      "scratchedAt": "2025-11-17T16:45:55.157Z",
+      "redeemedAt": "2025-11-17T16:45:58.042Z"
+    },
+    {
+      "id": "2029b145-0790-4afa-ae07-b9b55b7ecddd",
+      "amount": 680,
+      "reason": "Voucher from admin",
+      "code": "7ET3AJS8",
+      "status": "redeemed",
+      "createdAt": "2025-11-17T16:52:31.675Z",
+      "createdBy": "admin-001",
+      "userId": "a80f0b4f-d70d-4bf7-a74e-d46661972c4f",
+      "scratchedAt": "2025-11-17T16:53:33.848Z",
+      "redeemedAt": "2025-11-17T16:53:44.984Z"
+    },
+    {
+      "id": "6faf2b6c-df46-4ba2-8c02-611f20685516",
+      "amount": 60,
+      "reason": "Voucher from admin",
+      "code": "BB",
+      "status": "redeemed",
+      "createdAt": "2025-11-17T16:59:58.231Z",
+      "createdBy": "admin-001",
+      "userId": "46eabf88-ddce-4961-856f-c7f6fdf2dd98",
+      "scratchedAt": "2025-11-17T17:00:07.998Z",
+      "redeemedAt": "2025-11-17T17:00:12.215Z"
+    },
+    {
+      "id": "5d9ae3fc-c1c9-42f5-9dce-597776d55574",
+      "amount": 1200,
+      "reason": "Voucher from admin",
+      "code": "44",
+      "status": "redeemed",
+      "createdAt": "2025-11-17T17:05:37.058Z",
+      "createdBy": "admin-001",
+      "userId": "fb1eb240-4170-4d2a-92bd-601d37d944b6",
+      "scratchedAt": "2025-11-17T17:05:44.262Z",
+      "redeemedAt": "2025-11-17T17:05:48.230Z"
     }
   ]
 }

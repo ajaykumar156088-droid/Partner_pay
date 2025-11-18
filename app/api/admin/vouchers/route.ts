@@ -52,31 +52,41 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { userId, amount, reason } = body;
+    const { userId, amount, reason, code } = body;
 
-    if (!userId || !amount || amount <= 0) {
-      return NextResponse.json({ error: 'Invalid request. userId and positive amount are required.' }, { status: 400 });
+    // Require either a target userId (assigned voucher) or a code (global coupon)
+    if ((!userId && !code) || !amount || amount <= 0) {
+      return NextResponse.json({ error: 'Invalid request. Provide a userId or a code and a positive amount.' }, { status: 400 });
     }
 
-    // Verify user exists
-    const usersData = await readJSON<UsersData>('users.json');
-    const user = usersData.users?.find(u => u.id === userId);
-    if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    // If userId provided, verify user exists
+    if (userId) {
+      const usersData = await readJSON<UsersData>('users.json');
+      const user = usersData.users?.find(u => u.id === userId);
+      if (!user) {
+        return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      }
     }
 
-    // Create voucher
+    // If code is provided, ensure it's unique
+    const vouchersData = await readJSON<VouchersData>('vouchers.json');
+    const existing = (vouchersData.vouchers || []).find(v => v.code && code && v.code.toLowerCase() === String(code).toLowerCase());
+    if (code && existing) {
+      return NextResponse.json({ error: 'Code already exists' }, { status: 400 });
+    }
+
+    // Create voucher (can be user-assigned or a global coupon with a code)
     const voucher = {
       id: uuidv4(),
-      userId,
+      // userId may be undefined for coupon codes
+      userId: userId || undefined,
       amount: parseFloat(amount),
       reason: reason || 'Voucher from admin',
+      code: code ? String(code).trim() : undefined,
       status: 'pending' as const,
       createdAt: new Date().toISOString(),
       createdBy: session.userId,
     };
-
-    const vouchersData = await readJSON<VouchersData>('vouchers.json');
     if (!vouchersData.vouchers) {
       vouchersData.vouchers = [];
     }
