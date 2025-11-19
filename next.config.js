@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverActions: true,
-  },
+  // Server Actions are enabled by default in Next.js 14; no experimental flags needed.
+  // Keep ESLint checks enabled during build to surface issues early.
   images: {
     remotePatterns: [],
     unoptimized: false,

@@ -44,7 +44,7 @@ export default function PrivacyPage() {
                 1. Introduction
               </h2>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3 sm:mb-4">
-                Partner Pay Platform ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our payment platform.
+                Partner Pay Platform (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our payment platform.
               </p>
             </section>
 

@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: partner-pay-platform
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm start"
+    envVars:
+      - key: JWT_SECRET
+        scope: RUN_TIME
+        generator: random
+    autoDeploy: true
+    repo: "<your-github-repo-url>"

@@ -245,3 +245,29 @@ This project is provided as-is for development and educational purposes.
 
 For issues or questions, please check the code comments or create an issue in the repository.
 
+## Deploying to Render.com
+
+Quick steps to deploy this repo to Render using GitHub:
+
+1. Push the repo to GitHub (if not already):
+
+  - Create a repository on GitHub and push the current branch.
+
+2. Create a new Web Service on Render:
+
+  - Connect your GitHub account and select this repository.
+  - For Environment, choose: Node
+  - Build Command: `npm install && npm run build`
+  - Start Command: `npm start`
+  - Set the Environment Variable `JWT_SECRET` in Render's dashboard (or let `render.yaml` generate one).
+
+3. Recommended service settings:
+
+  - Node version: 18 (this repo includes `.nvmrc` and `engines` in `package.json`)
+  - Automatic deploys from the `main` branch
+  - Persistent filesystem is NOT available: any changes to files in `/data` during runtime will not persist across deploys. For production use a proper DB.
+
+4. After the first deploy, verify the site and test login flow. Use the `npm run setup` script locally to initialize the admin user if needed.
+
+Note: I added `render.yaml`, `.nvmrc`, and `.dockerignore` to help Render and container-based deployments. Do not change application logic or UI in this change.
+

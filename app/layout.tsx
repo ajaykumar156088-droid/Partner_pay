@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
+// Force dynamic rendering for the app to avoid static prerendering errors
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Partner Pay Platform',
   description: 'Partner Pay Platform - Admin and User Dashboard',

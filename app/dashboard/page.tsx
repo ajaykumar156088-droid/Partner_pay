@@ -29,6 +29,8 @@ export default function DashboardPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch user and transactions once on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchUser();
     fetchTransactions();
@@ -93,8 +95,8 @@ export default function DashboardPage() {
               <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
                 Account Dashboard
               </h1>
-              <p className="text-base text-gray-600 dark:text-gray-400">
-                Welcome back! Here's your account overview.
+                <p className="text-base text-gray-600 dark:text-gray-400">
+                Welcome back! Here&apos;s your account overview.
               </p>
             </div>
             <div className="flex items-center gap-3 animate-slide-up">

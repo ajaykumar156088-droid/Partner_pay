@@ -145,6 +145,18 @@
       "userId": "fb1eb240-4170-4d2a-92bd-601d37d944b6",
       "scratchedAt": "2025-11-17T17:05:44.262Z",
       "redeemedAt": "2025-11-17T17:05:48.230Z"
+    },
+    {
+      "id": "058b84e0-aece-45d4-9863-ca099fcb1c33",
+      "amount": 45,
+      "reason": "Voucher from admin",
+      "code": "T27BXFZLZ1",
+      "status": "redeemed",
+      "createdAt": "2025-11-18T11:43:09.380Z",
+      "createdBy": "admin-001",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "scratchedAt": "2025-11-18T11:43:39.052Z",
+      "redeemedAt": "2025-11-18T11:43:42.114Z"
     }
   ]
 }

@@ -30,6 +30,8 @@ export default function CreateVoucherPage() {
     isCoupon: false,
   });
 
+  // fetchUsers runs once on mount to populate user list
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchUsers();
   }, []);

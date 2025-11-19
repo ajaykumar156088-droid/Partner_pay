@@ -22,7 +22,8 @@ export async function verifyPassword(password: string, hashedPassword: string): 
 }
 
 export async function createSession(payload: SessionPayload): Promise<string> {
-  const token = await new SignJWT(payload)
+  // SignJWT requires a payload with an index signature; cast to a generic record
+  const token = await new SignJWT(payload as unknown as Record<string, unknown>)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('30d') // 30 days expiration
@@ -34,7 +35,7 @@ export async function createSession(payload: SessionPayload): Promise<string> {
 export async function verifySession(token: string): Promise<SessionPayload | null> {
   try {
     const { payload } = await jwtVerify(token, JWT_SECRET);
-    return payload as SessionPayload;
+    return payload as unknown as SessionPayload;
   } catch (error) {
     return null;
   }

@@ -36,7 +36,7 @@ export default function ContactPage() {
               Contact Us
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-400">
-              We're here to help! Get in touch with our support team.
+              We&apos;re here to help! Get in touch with our support team.
             </p>
           </div>
 
@@ -53,7 +53,7 @@ export default function ContactPage() {
                 </h2>
               </div>
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3 sm:mb-4">
-                Send us an email and we'll get back to you within 24 hours.
+                Send us an email and we&apos;ll get back to you within 24 hours.
               </p>
               <a
                 href="mailto:help@partnerpay.com"
@@ -96,7 +96,7 @@ export default function ContactPage() {
                   How do I reset my password?
                 </h4>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Please contact our support team at help@partnerpay.com with your registered email address, and we'll assist you with password reset.
+                  Please contact our support team at help@partnerpay.com with your registered email address, and we&apos;ll assist you with password reset.
                 </p>
               </div>
               <div>

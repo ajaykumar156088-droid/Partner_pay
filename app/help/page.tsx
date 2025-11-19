@@ -16,31 +16,31 @@ export default function HelpPage() {
     },
     {
       question: "How do I check my balance?",
-      answer: "Log in to your account and navigate to the Dashboard. Your current balance will be displayed prominently at the top of the page."
+  answer: "Log in to your account and navigate to the Dashboard. Your current balance will be displayed prominently at the top of the page."
     },
     {
       question: "What are the withdrawal limits?",
-      answer: "UPI withdrawals require a minimum balance of ₹2,500, while USDT withdrawals require a minimum of ₹500. There are no maximum limits for withdrawals."
+  answer: "UPI withdrawals require a minimum balance of ₹2,500, while USDT withdrawals require a minimum of ₹500. There are no maximum limits for withdrawals."
     },
     {
       question: "How long do withdrawals take to process?",
-      answer: "Withdrawal processing times vary. UPI transfers typically take 1-2 business days, while USDT transfers may take 2-5 business days. Contact support if your withdrawal is delayed."
+  answer: "Withdrawal processing times vary. UPI transfers typically take 1-2 business days, while USDT transfers may take 2-5 business days. Contact support if your withdrawal is delayed."
     },
     {
       question: "Is my money safe?",
-      answer: "Yes, we use industry-standard security measures including 256-bit SSL encryption, secure password hashing, and regular security audits to protect your funds and data."
+  answer: "Yes, we use industry-standard security measures including 256-bit SSL encryption, secure password hashing, and regular security audits to protect your funds and data."
     },
     {
       question: "What should I do if I forget my password?",
-      answer: "Contact our support team at help@partnerpay.com with your registered email address, and we'll assist you with password reset."
+  answer: "Contact our support team at help@partnerpay.com with your registered email address, and we&apos;ll assist you with password reset."
     },
     {
       question: "Can I use the platform on mobile devices?",
-      answer: "Yes, Partner Pay is fully responsive and works seamlessly on desktop, tablet, and mobile devices. Simply access the platform through your mobile browser."
+  answer: "Yes, Partner Pay is fully responsive and works seamlessly on desktop, tablet, and mobile devices. Simply access the platform through your mobile browser."
     },
     {
       question: "How do I view my transaction history?",
-      answer: "Navigate to your Dashboard and scroll down to the 'Transaction History' section. All your transactions are listed with dates, amounts, and details."
+  answer: "Navigate to your Dashboard and scroll down to the &apos;Transaction History&apos; section. All your transactions are listed with dates, amounts, and details."
     }
   ];
 
@@ -98,7 +98,7 @@ export default function HelpPage() {
               Still Need Help?
             </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Can't find what you're looking for? Our support team is here to help.
+              Can&apos;t find what you&apos;re looking for? Our support team is here to help.
             </p>
             <a
               href="/contact"
