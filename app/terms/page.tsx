@@ -80,7 +80,7 @@ export default function TermsPage() {
               <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400">
                 <li>Use the platform for any illegal or unauthorized purpose</li>
                 <li>Attempt to gain unauthorized access to any part of the platform</li>
-                <li>Interfere with or disrupt the platform's security or functionality</li>
+                <li>Interfere with or disrupt the platform&apos;s security or functionality</li>
                 <li>Use automated systems to access the platform without permission</li>
                 <li>Share your account credentials with others</li>
                 <li>Engage in any fraudulent or deceptive practices</li>

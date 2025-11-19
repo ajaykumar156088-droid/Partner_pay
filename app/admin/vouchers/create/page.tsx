@@ -139,8 +139,8 @@ export default function CreateVoucherPage() {
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Create Scratch Voucher
           </h1>
-          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6">
-            Add a new scratch voucher to a user's account
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-6">
+            Add a new scratch voucher to a user&apos;s account
           </p>
 
           {error && (

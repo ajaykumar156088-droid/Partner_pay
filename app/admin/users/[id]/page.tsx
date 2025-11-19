@@ -41,6 +41,8 @@ export default function UserDetailPage() {
   const [updating, setUpdating] = useState(false);
   const [updatingBalance, setUpdatingBalance] = useState(false);
 
+  // fetchUser and fetchTransactions depend on userId and should run once when it changes
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (userId) {
       fetchUser();

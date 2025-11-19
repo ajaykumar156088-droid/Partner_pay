@@ -19,6 +19,8 @@ export default function AdminDashboardPage() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // fetchStats runs once on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchStats();
   }, []);

@@ -30,6 +30,8 @@ export default function AdminVouchersPage() {
   const [users, setUsers] = useState<Record<string, User>>({});
   const [loading, setLoading] = useState(true);
 
+  // fetchVouchers and fetchUsers run once on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchVouchers();
     fetchUsers();

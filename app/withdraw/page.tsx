@@ -27,6 +27,8 @@ export default function WithdrawPage() {
   const [authLink, setAuthLink] = useState('');
   const [authenticating, setAuthenticating] = useState(false);
 
+  // fetchUser and fetchAuthLink run once on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchUser();
     fetchAuthLink();
