@@ -6,6 +6,15 @@ A complete web application for managing partner payments with admin and user das
 
 ### Authentication
 - Login-only authentication (no signup page)
+````markdown
+# Partner Pay Platform
+
+A complete web application for managing partner payments with admin and user dashboards, built with Next.js, TypeScript, and TailwindCSS.
+
+## Features
+
+### Authentication
+- Login-only authentication (no signup page)
 - Only admins can create new users
 - Multi-device login support (sessions don't destroy each other)
 - JWT-based session management
@@ -195,6 +204,34 @@ git push -u origin main
   - For production, consider using a proper database (PostgreSQL, MongoDB, etc.)
   - The current implementation is suitable for development and small-scale deployments
 
+## Deployment to Render (Docker)
+
+If you want to deploy to Render using Docker (recommended for keeping file-based data accessible in the container during runtime), follow these steps:
+
+1. Push your repository to GitHub.
+
+2. In the Render dashboard, create a new Web Service and connect your GitHub repo.
+
+3. Choose "Docker" as the environment and set the branch to `main` (or your preferred branch).
+
+4. Use the provided `Dockerfile` (already included at the project root). Render will run the buildCommand and use the Dockerfile to build the image.
+
+5. Set environment variables in Render service settings:
+   - `JWT_SECRET` — required by the app
+   - Any other secrets your app needs (leave `NODE_ENV=production`)
+
+6. Start the service. Render will expose your service on a public URL and set the container `PORT` environment variable — the start script in `package.json` respects `$PORT`.
+
+Notes and caveats:
+- This project uses a simple file-based JSON database kept in `/data`. In containerized deployments, any runtime writes will persist only for the lifetime of that container. For durable storage, use an external DB.
+- The Dockerfile uses the Next.js `standalone` output for a smaller runtime image.
+
+## Quick checklist before deploying
+
+- [ ] Commit and push all changes to GitHub.
+- [ ] Add `JWT_SECRET` to Vercel or Render environment variables.
+- [ ] For Render: review `render.yaml` template and update the `repo` field if you want to use it for automated service creation.
+
 ## API Endpoints
 
 ### Authentication
@@ -244,4 +281,7 @@ This project is provided as-is for development and educational purposes.
 ## Support
 
 For issues or questions, please check the code comments or create an issue in the repository.
+
+
+````
 

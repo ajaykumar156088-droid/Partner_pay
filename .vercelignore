@@ -1,0 +1,9 @@
+# Ignore project files that are not needed for Vercel builds
+node_modules/
+scripts/
+data/*.backup.json
+*.log
+.vscode/
+Dockerfile
+render.yaml
+.dockerignore

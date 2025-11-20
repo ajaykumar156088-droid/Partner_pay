@@ -1,0 +1,22 @@
+# Render service template — replace <GITHUB_REPO> with your repository and adjust region/plan as needed.
+services:
+  - type: web
+    name: partner-pay
+    env: docker
+    plan: starter
+    region: oregon
+    repo: https://github.com/<GITHUB_USER>/<GITHUB_REPO>
+    branch: main
+    dockerfilePath: ./Dockerfile
+    buildCommand: npm ci --legacy-peer-deps && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        fromDatabase: false
+
+# Notes:
+# - Replace repo with your repository URL and set any required env vars in the Render dashboard
+# - This configuration uses Docker. If you'd rather use Render's native Node environment, remove env: docker
+#   and set appropriate build/start commands there.
