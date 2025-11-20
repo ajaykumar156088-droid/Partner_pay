@@ -255,6 +255,38 @@
       "type": "admin_add",
       "details": "Admin added balance",
       "timestamp": "2025-11-17T17:14:06.652Z"
+    },
+    {
+      "id": "2a4fd6ef-abd4-4c69-85d1-e60bd9c0e749",
+      "userId": "0a594d70-e5da-4676-9e46-7ba9d55904c7",
+      "amount": 999,
+      "type": "admin_add",
+      "details": "Admin added balance",
+      "timestamp": "2025-11-19T16:23:06.449Z"
+    },
+    {
+      "id": "943a1654-65ae-4695-981b-61de4a3be384",
+      "userId": "0a594d70-e5da-4676-9e46-7ba9d55904c7",
+      "amount": 1,
+      "type": "voucher_redeemed",
+      "details": "Voucher redeemed: Voucher from admin",
+      "timestamp": "2025-11-19T16:37:07.685Z"
+    },
+    {
+      "id": "9d5a5907-c142-42c1-9545-6b1c0a0d4268",
+      "userId": "32a48655-9af5-411e-be5e-907cc81440f2",
+      "amount": 999,
+      "type": "admin_add",
+      "details": "Admin added balance",
+      "timestamp": "2025-11-19T17:12:28.314Z"
+    },
+    {
+      "id": "7c863805-6ec1-4ff8-9aab-800146f14228",
+      "userId": "32a48655-9af5-411e-be5e-907cc81440f2",
+      "amount": 1,
+      "type": "voucher_redeemed",
+      "details": "Voucher redeemed: Voucher from admin",
+      "timestamp": "2025-11-19T17:13:33.352Z"
     }
   ]
 }

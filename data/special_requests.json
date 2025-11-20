@@ -1,0 +1,38 @@
+[
+  {
+    "nationality": "Indian",
+    "userType": "Individual",
+    "email": "a@bcde.fgh",
+    "submittedAt": "2025-11-19T16:56:09.016Z"
+  },
+  {
+    "nationality": "Indian",
+    "userType": "Individual",
+    "email": "system@gmail.com",
+    "submittedAt": "2025-11-20T03:25:46.571Z"
+  },
+  {
+    "nationality": "Indian",
+    "userType": "Group",
+    "email": "cvjhvyh@gmail.co",
+    "submittedAt": "2025-11-20T03:41:50.124Z"
+  },
+  {
+    "nationality": "Other",
+    "userType": "Individual",
+    "email": "sherrrrr@gmail.com",
+    "submittedAt": "2025-11-20T03:49:55.665Z"
+  },
+  {
+    "nationality": "Other",
+    "userType": "Group",
+    "email": "s@tt.pp",
+    "submittedAt": "2025-11-20T03:53:57.746Z"
+  },
+  {
+    "nationality": "Other",
+    "userType": "Individual",
+    "email": "Todo@ss",
+    "submittedAt": "2025-11-20T10:34:25.551Z"
+  }
+]

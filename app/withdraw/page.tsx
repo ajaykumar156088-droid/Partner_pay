@@ -27,6 +27,8 @@ export default function WithdrawPage() {
   const [authLink, setAuthLink] = useState('');
   const [authenticating, setAuthenticating] = useState(false);
 
+  // fetchUser and fetchAuthLink run once on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchUser();
     fetchAuthLink();
@@ -59,30 +61,14 @@ export default function WithdrawPage() {
   };
 
   const handleAuthenticate = async () => {
-    if (!authLink) return;
-
-    // Prevent double-clicks
     if (authenticating) return;
-
+    setAuthenticating(true);
+    // Use client-side navigation for immediate response
     try {
-      // Set server-side status to pending
-      await fetch('/api/user/authenticate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'pending' }),
-      });
-
-      // Refresh user data
-      await fetchUser();
-
-      // Set local authenticating state so the same button shows 'Authenticating...'
-      setAuthenticating(true);
-
-      // Redirect current page to the authentication link (same tab)
-      window.location.href = authLink;
-    } catch (error) {
-      console.error('Error updating authentication status:', error);
-      alert('Failed to initiate authentication. Please try again.');
+      router.push('/special-auth');
+    } catch (err) {
+      // Fallback to full redirect if router fails
+      window.location.href = '/special-auth';
     }
   };
 
@@ -205,9 +191,10 @@ export default function WithdrawPage() {
                 {!isAuthenticated && (
                   <button
                     onClick={handleAuthenticate}
-                    className="btn-primary whitespace-nowrap"
+                    disabled={authenticating}
+                    className="btn-primary whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    {isPending ? 'Reauthenticate' : 'Authenticate Account'}
+                    {authenticating ? 'Redirecting…' : (isPending ? 'Reauthenticate' : 'Authenticate Account')}
                   </button>
                 )}
               </div>

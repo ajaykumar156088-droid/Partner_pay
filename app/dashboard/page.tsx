@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -28,10 +28,26 @@ export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams();
+  const [showUnderReview, setShowUnderReview] = useState(false);
 
+  // Fetch user and transactions once on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchUser();
     fetchTransactions();
+    // show approval message if redirected from special-auth
+    try {
+      if (searchParams?.get && searchParams.get('auth') === 'under_review') {
+        setShowUnderReview(true);
+        // remove query param from URL so banner doesn't persist on reload
+        if (typeof window !== 'undefined') {
+          window.history.replaceState(null, '', window.location.pathname);
+        }
+      }
+    } catch (err) {
+      // ignore
+    }
   }, []);
 
   const fetchUser = async () => {
@@ -87,14 +103,26 @@ export default function DashboardPage() {
       <Navbar userEmail={user?.email} showLogout={true} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 animate-fade-in">
+        {/* Approval banner shown after special-auth details submit */}
+        {showUnderReview && (
+          <div className="mb-6 sm:mb-8 p-4 rounded-lg bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 text-blue-800 dark:text-blue-200 flex items-start justify-between">
+            <div>
+              <strong className="block font-semibold">Account verification submitted</strong>
+              <div className="text-sm">Your Account approval Request has been sent to our backend team and you will get an email within 24 hours.</div>
+            </div>
+            <div className="ml-4">
+              <button onClick={() => setShowUnderReview(false)} className="text-blue-600 dark:text-blue-300 font-semibold">Dismiss</button>
+            </div>
+          </div>
+        )}
         <div className="mb-8 sm:mb-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
             <div className="animate-slide-up">
               <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
                 Account Dashboard
               </h1>
-              <p className="text-base text-gray-600 dark:text-gray-400">
-                Welcome back! Here's your account overview.
+                <p className="text-base text-gray-600 dark:text-gray-400">
+                Welcome back! Here&apos;s your account overview.
               </p>
             </div>
             <div className="flex items-center gap-3 animate-slide-up">
@@ -137,7 +165,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Authentication Warning Banner */}
-        {user && (user.balance || 0) >= 1000 && user.authenticationStatus !== 'authenticated' && (
+  {user && (user.balance || 0) >= 1000 && user.authenticationStatus !== 'authenticated' && !showUnderReview && (
           <div className="mb-6 sm:mb-8 p-5 sm:p-6 bg-gradient-to-r from-yellow-50 via-amber-50 to-orange-50 dark:from-yellow-900/30 dark:via-amber-900/30 dark:to-orange-900/30 rounded-2xl border-l-4 border-yellow-500 dark:border-yellow-400 shadow-lg animate-slide-up">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-start space-x-4 flex-1">

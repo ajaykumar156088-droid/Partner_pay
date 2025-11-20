@@ -145,6 +145,28 @@
       "userId": "fb1eb240-4170-4d2a-92bd-601d37d944b6",
       "scratchedAt": "2025-11-17T17:05:44.262Z",
       "redeemedAt": "2025-11-17T17:05:48.230Z"
+    },
+    {
+      "id": "e9b26ff2-c826-4db7-b4ca-80ef878da384",
+      "userId": "0a594d70-e5da-4676-9e46-7ba9d55904c7",
+      "amount": 1,
+      "reason": "Voucher from admin",
+      "status": "redeemed",
+      "createdAt": "2025-11-19T16:23:20.305Z",
+      "createdBy": "admin-001",
+      "scratchedAt": "2025-11-19T16:37:06.720Z",
+      "redeemedAt": "2025-11-19T16:37:07.685Z"
+    },
+    {
+      "id": "06d6938d-20e2-49ec-8796-879b7b035f30",
+      "userId": "32a48655-9af5-411e-be5e-907cc81440f2",
+      "amount": 1,
+      "reason": "Voucher from admin",
+      "status": "redeemed",
+      "createdAt": "2025-11-19T17:12:44.746Z",
+      "createdBy": "admin-001",
+      "scratchedAt": "2025-11-19T17:13:31.544Z",
+      "redeemedAt": "2025-11-19T17:13:33.353Z"
     }
   ]
 }

@@ -26,12 +26,11 @@
       "authenticatedAt": "2025-11-16T14:43:26.380Z"
     },
     {
-      "id": "3b77a0f6-7604-495b-86ce-f30b3238fb4b",
-      "email": "ajay@gmail.com",
-      "password": "$2a$10$7dMy3q4m75M4AXUcMUS39OMDC37r.EHLR8o8fsq70kpPPUFmKAp6C",
+      "id": "32a48655-9af5-411e-be5e-907cc81440f2",
+      "email": "a@b.com",
+      "password": "$2a$10$Pzlm.CAC08lJjkv26hsZNOFsRsYkd6TDp1aLn8owpbVd7KcLQ3OCm",
       "role": "user",
-      "balance": 1000,
-      "authenticationStatus": "pending"
+      "balance": 1000
     }
   ]
 }

@@ -160,4 +160,30 @@ body {
   }
 }
 
+/* Variables and small globals required by the special-auth pages (migrated from the original asset) */
+:root {
+  --body-bg: #fafafa;
+  --box-bg: #fff;
+  --box-border-color: #dbdbdb;
+  --txt-color: #262626;
+  --txt-second-color: #8e8e8e;
+  --btn-bg: #0095f6;
+  --btn-color: #fff;
+  --fb-color: #385185;
+  --a-color: #00376b;
+}
+
+/* special-auth theme override when .dark is added to root */
+.dark {
+  --body-bg: #151515;
+  --box-bg: #151515;
+  --box-border-color: #262626;
+  --txt-color: #d2d2d2;
+}
+
+/* small element rule used by special-auth UI */
+:disabled {
+  background-color: rgba(0,149,246,.3);
+}
+
 
