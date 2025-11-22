@@ -8,29 +8,11 @@
       "balance": 0
     },
     {
-      "id": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "id": "022e8f09-991e-4ea4-92c2-2c5317a449da",
       "email": "harry@gmail.com",
-      "password": "$2a$10$Xe/qeH0kO4d1SNO0jw2xguKbp3ZBhbbzL1Moz2hWnO.jOXyOlGvVC",
+      "password": "$2a$10$XnVv6snCMAKNFnCcq3fKs.Nqr80cRHleEDCmLBGaJmpdrzeKfbBCW",
       "role": "user",
-      "balance": 26113,
-      "authenticationStatus": "authenticated",
-      "authenticatedAt": "2025-11-16T12:18:37.747Z"
-    },
-    {
-      "id": "a80f0b4f-d70d-4bf7-a74e-d46661972c4f",
-      "email": "pankajpandit55252@gmail.com",
-      "password": "$2a$10$Fi2vzfrwp1jBsAYOll.ZmeM.wg6NmwcNUT/EPhdKmXU.rJUs8FR42",
-      "role": "user",
-      "balance": 104180,
-      "authenticationStatus": "authenticated",
-      "authenticatedAt": "2025-11-16T14:43:26.380Z"
-    },
-    {
-      "id": "32a48655-9af5-411e-be5e-907cc81440f2",
-      "email": "a@b.com",
-      "password": "$2a$10$Pzlm.CAC08lJjkv26hsZNOFsRsYkd6TDp1aLn8owpbVd7KcLQ3OCm",
-      "role": "user",
-      "balance": 1000
+      "balance": 0
     }
   ]
 }
