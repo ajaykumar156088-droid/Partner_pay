@@ -6,7 +6,11 @@ coverage
 .git
 .env
 .env.local
+.env*
 *.log
 dist
 tmp
 data/*.backup.json
+.vscode
+.DS_Store
+npm-debug.log

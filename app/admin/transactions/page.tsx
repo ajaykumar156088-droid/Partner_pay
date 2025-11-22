@@ -27,6 +27,8 @@ export default function AdminTransactionsPage() {
   const [users, setUsers] = useState<Record<string, User>>({});
   const [loading, setLoading] = useState(true);
 
+  // fetchTransactions and fetchUsers run on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchTransactions();
     fetchUsers();

@@ -14,6 +14,8 @@ export default function AdminSettingsPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  // fetchSettings is intentionally called once on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchSettings();
   }, []);
@@ -105,7 +107,7 @@ export default function AdminSettingsPage() {
                 Authentication Link *
               </label>
               <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
-                This link will be used for account authentication. Users with balance ≥ ₹2,500 will be redirected to this link when they click "Authenticate Account" or "Reauthenticate".
+                This link will be used for account authentication. Users with balance ≥ ₹2,500 will be redirected to this link when they click &quot;Authenticate Account&quot; or &quot;Reauthenticate&quot;.
               </p>
               <input
                 type="url"

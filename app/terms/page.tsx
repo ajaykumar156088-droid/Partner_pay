@@ -43,7 +43,7 @@ export default function TermsPage() {
               <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
                 1. Acceptance of Terms
               </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                <p className="text-gray-600 dark:text-gray-400 mb-4">
                 By accessing and using Partner Pay Platform, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these terms, please do not use our service.
               </p>
             </section>
@@ -80,7 +80,7 @@ export default function TermsPage() {
               <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400">
                 <li>Use the platform for any illegal or unauthorized purpose</li>
                 <li>Attempt to gain unauthorized access to any part of the platform</li>
-                <li>Interfere with or disrupt the platform's security or functionality</li>
+                <li>Interfere with or disrupt the platform&apos;s security or functionality</li>
                 <li>Use automated systems to access the platform without permission</li>
                 <li>Share your account credentials with others</li>
                 <li>Engage in any fraudulent or deceptive practices</li>

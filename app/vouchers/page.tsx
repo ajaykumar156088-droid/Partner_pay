@@ -34,6 +34,8 @@ export default function VouchersPage() {
   const [processing, setProcessing] = useState<string | null>(null);
   const [codeInput, setCodeInput] = useState('');
 
+  // Fetch user and vouchers once on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchUser();
     fetchVouchers();
@@ -268,7 +270,7 @@ export default function VouchersPage() {
               No Vouchers Yet
             </h2>
             <p className="text-gray-600 dark:text-gray-400">
-              You don't have any vouchers at the moment. Check back later!
+              You don&apos;t have any vouchers at the moment. Check back later!
             </p>
           </div>
         ) : (

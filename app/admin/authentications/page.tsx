@@ -20,6 +20,8 @@ export default function AdminAuthenticationsPage() {
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState<string | null>(null);
 
+  // fetchPendingAuthentications runs once on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchPendingAuthentications();
   }, []);

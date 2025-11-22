@@ -287,6 +287,14 @@
       "type": "voucher_redeemed",
       "details": "Voucher redeemed: Voucher from admin",
       "timestamp": "2025-11-19T17:13:33.352Z"
+    },
+    {
+      "id": "e3fd0d3f-acee-4ca7-86b8-c0bae4c0123d",
+      "userId": "0eea057c-4062-4f51-8d12-951711b881c4",
+      "amount": 45,
+      "type": "voucher_redeemed",
+      "details": "Voucher redeemed: Voucher from admin",
+      "timestamp": "2025-11-18T11:43:42.114Z"
     }
   ]
 }

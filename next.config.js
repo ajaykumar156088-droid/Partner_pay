@@ -4,11 +4,10 @@ const nextConfig = {
   swcMinify: true,
   // Produce a standalone output which is convenient for Docker/Render deployments
   output: 'standalone',
-  // Server Actions are available by default in recent Next.js releases.
-  // The `experimental.serverActions` option is no longer necessary and
-  // can cause warnings/errors — remove it.
-  // Disable ESLint checks during `next build` on the server to avoid
-  // build-time failures caused by strict lint rules in this repo.
+  // Server Actions are enabled by default in Next.js 14; no experimental flags needed.
+  // For CI/deployment (Render) we skip ESLint during build to avoid failing
+  // deployments due to pre-existing lint warnings; developers should run
+  // `npm run lint` locally and fix issues progressively.
   eslint: {
     ignoreDuringBuilds: true,
   },

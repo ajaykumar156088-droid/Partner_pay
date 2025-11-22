@@ -30,7 +30,7 @@ export async function createSession(payload: SessionPayload): Promise<string> {
     .setIssuedAt()
     .setExpirationTime('30d') // 30 days expiration
     .sign(JWT_SECRET);
-  
+
   return token;
 }
 
@@ -48,18 +48,18 @@ export async function verifySession(token: string): Promise<SessionPayload | nul
 export async function getSession(): Promise<SessionPayload | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get('session')?.value;
-  
+
   if (!token) {
     return null;
   }
-  
+
   return verifySession(token);
 }
 
 export async function setSession(payload: SessionPayload): Promise<void> {
   const token = await createSession(payload);
   const cookieStore = await cookies();
-  
+
   cookieStore.set('session', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
@@ -77,16 +77,16 @@ export async function deleteSession(): Promise<void> {
 export async function authenticateUser(email: string, password: string): Promise<SessionPayload | null> {
   const data = await readJSON<UsersData>('users.json');
   const user = data.users?.find(u => u.email === email);
-  
+
   if (!user) {
     return null;
   }
-  
+
   const isValid = await verifyPassword(password, user.password);
   if (!isValid) {
     return null;
   }
-  
+
   return {
     userId: user.id,
     email: user.email,
