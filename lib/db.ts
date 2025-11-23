@@ -83,20 +83,26 @@ export async function getUsers(): Promise<User[]> {
 }
 
 export async function getUser(id: string): Promise<User | null> {
-  const { data, error } = await supabase.from('users').select('*').eq('id', id).single();
+  const { data, error } = await supabase.from('users').select('*').eq('id', id).maybeSingle();
   if (error) {
     console.error('[DB] Error fetching user from Supabase:', error);
     return null;
   }
+  if (!data) return null;
   return mapUser(data);
 }
 
 export async function getUserByEmail(email: string): Promise<User | null> {
   console.log(`[DB] Fetching user by email: ${email}`);
-  const { data, error } = await supabase.from('users').select('*').eq('email', email).single();
+  const { data, error } = await supabase.from('users').select('*').eq('email', email).maybeSingle();
 
   if (error) {
     console.log('[DB] User not found or error:', error.message);
+    return null;
+  }
+
+  if (!data) {
+    console.log('[DB] User not found');
     return null;
   }
 
@@ -186,8 +192,9 @@ export async function getVouchers(): Promise<Voucher[]> {
 }
 
 export async function getVoucher(id: string): Promise<Voucher | null> {
-  const { data, error } = await supabase.from('vouchers').select('*').eq('id', id).single();
+  const { data, error } = await supabase.from('vouchers').select('*').eq('id', id).maybeSingle();
   if (error) return null;
+  if (!data) return null;
   return mapVoucher(data);
 }
 
@@ -228,8 +235,9 @@ export async function updateVoucher(voucher: Voucher): Promise<void> {
 
 // Settings
 export async function getSetting(key: string): Promise<any> {
-  const { data, error } = await supabase.from('app_settings').select('value').eq('key', key).single();
+  const { data, error } = await supabase.from('app_settings').select('value').eq('key', key).maybeSingle();
   if (error) return null;
+  if (!data) return null;
   return data.value;
 }
 
