@@ -15,6 +15,10 @@ services:
         value: production
       - key: JWT_SECRET
         fromDatabase: false
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        fromDatabase: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        fromDatabase: false
 
 # Notes:
 # - Replace repo with your repository URL and set any required env vars in the Render dashboard

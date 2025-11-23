@@ -1,43 +1,52 @@
-# Supabase Migration Walkthrough
-
-I have successfully modified your project to use Supabase as the database backend, replacing the local JSON file storage.
+# Deployment Optimization Walkthrough
 
 ## Changes Made
-1.  **Dependencies**: Installed `@supabase/supabase-js`, `dotenv`, and `ts-node`.
-2.  **Database Layer**: Refactored `lib/db.ts` to use Supabase client for all data operations.
-3.  **API Routes**: Updated all API routes to use the new database functions.
-4.  **Schema**: Created `supabase_schema.sql` in the project root.
-5.  **Migration Script**: Created `scripts/migrate-to-supabase.ts` to help you move your existing data.
 
-## Action Required
+1.  **Fixed TypeScript Error**:
+    -   Modified `scripts/verify-shadow-sync.ts` to remove the `.ts` extension from the import path `../lib/db.ts`. This resolves the "An import path can only end with a '.ts' extension" error during build.
 
-### 1. Setup Database Tables
-1.  Go to your [Supabase Dashboard](https://supabase.com/dashboard).
-2.  Open the **SQL Editor**.
-3.  Copy the contents of [supabase_schema.sql](file:///Users/ajay/Desktop/Partner_Pay_V_2/supabase_schema.sql).
-4.  Paste it into the SQL Editor and click **Run**.
+2.  **Updated Render Configuration**:
+    -   Updated `render.yaml` to include `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in the environment variables section.
 
-### 2. Configure Environment Variables
-1.  Open `.env.local`.
-2.  Add your Supabase credentials (you can find these in Project Settings > API):
-    ```env
-    NEXT_PUBLIC_SUPABASE_URL=your_project_url
-    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
-    ```
+3.  **Updated Deployment Documentation**:
+    -   Updated `DEPLOYMENT.md` to include instructions for adding Supabase environment variables (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `JWT_SECRET`) for both Render and Vercel deployments.
 
-### 3. Migrate Existing Data (Optional)
-If you want to keep your current users and transactions:
-1.  Run the migration script:
-    ```bash
-    npx ts-node scripts/migrate-to-supabase.ts
-    ```
+## Verification Results
 
-### 4. Start the App
+### Build Verification
+Ran `npm run build` successfully.
+
 ```bash
-npm run dev
+> partner-pay-platform@1.0.0 build
+> next build
+   ...
+   Generating static pages (0/16) ...
+   Generating static pages (4/16) ...
+   Generating static pages (8/16) ...
+   Generating static pages (12/16) ...
+   Generating static pages (16/16) ...
+   Finalizing page optimization ...
+   Collecting build traces ...
+   
+Route (app)                              Size     First Load JS
+┌ ○ /                                    168 B          87.5 kB
+├ ○ /_not-found                          871 B          88.2 kB
+...
+└ ƒ /withdraw                            3.75 kB         102 kB
++ First Load JS shared by all            87.3 kB
+  ├ chunks/117-e61c6f8281882622.js       31.7 kB
+  ├ chunks/fd9d1056-87da80e0c187477b.js  53.6 kB
+  └ other shared chunks (total)          1.9 kB
 ```
 
-## Verification
-- **Login**: Try logging in with an existing user (after migration) or a new user.
-- **Admin Panel**: Check if users and transactions are visible in the admin panel.
-- **Transactions**: Try performing a transaction (e.g., scratch a voucher).
+### Configuration Check
+-   `render.yaml`: Verified correct environment variables are listed.
+-   `Dockerfile`: Verified multi-stage build setup for standalone output.
+-   `next.config.js`: Verified `output: 'standalone'` is enabled.
+
+## Next Steps for User
+
+1.  **Push to GitHub**: Commit and push the changes to your GitHub repository.
+2.  **Configure Environment Variables**:
+    -   **Render**: Go to your service dashboard and add the values for `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and `JWT_SECRET`.
+    -   **Vercel**: Go to your project settings and add the same environment variables.

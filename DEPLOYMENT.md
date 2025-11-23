@@ -25,6 +25,8 @@
    - **Start Command**: `npm run start`
 4. Add the following Environment Variables in the Render dashboard:
    - `JWT_SECRET`: A secure random string.
+   - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase Project URL.
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase Anon Key.
    - `NODE_ENV`: `production`
 
 ### Vercel
@@ -32,4 +34,7 @@
 2. Run `vercel` in the project directory.
 3. Follow the prompts to deploy.
 4. Alternatively, import your GitHub repository directly in the Vercel dashboard.
-5. Add the `JWT_SECRET` environment variable in the Vercel project settings.
+5. Add the following environment variables in the Vercel project settings:
+   - `JWT_SECRET`
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`

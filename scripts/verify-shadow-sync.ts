@@ -1,4 +1,4 @@
-import { createUser, updateUser, deleteUser, User } from '../lib/db.ts';
+import { createUser, updateUser, deleteUser, User } from '../lib/db';
 import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
 import dotenv from 'dotenv';
