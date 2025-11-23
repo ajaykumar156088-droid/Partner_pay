@@ -37,8 +37,10 @@ export default function WithdrawPage() {
   const fetchUser = async () => {
     try {
       const response = await fetch('/api/auth/me');
-      if (response.status === 401) {
-        router.push('/login');
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 404) {
+          router.push('/login');
+        }
         return;
       }
       const data = await response.json();
@@ -138,7 +140,7 @@ export default function WithdrawPage() {
                   Available Balance
                 </h2>
                 <p className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-2">
-                  ₹{user?.balance.toLocaleString('en-IN') || '0.00'}
+                  ₹{user?.balance?.toLocaleString('en-IN') || '0.00'}
                 </p>
                 <p className="text-sm text-blue-100/80">Ready for withdrawal</p>
               </div>
@@ -273,10 +275,10 @@ export default function WithdrawPage() {
                 onClick={() => setMethod('upi')}
                 disabled={!canWithdrawUPI || loading}
                 className={`w-full font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${hasMinimumBalanceForUPI && !isAuthenticated
-                    ? 'bg-gradient-to-r from-gray-400 to-gray-500 text-white cursor-not-allowed'
-                    : canWithdrawUPI
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white'
-                      : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white cursor-not-allowed'
+                  ? 'bg-gradient-to-r from-gray-400 to-gray-500 text-white cursor-not-allowed'
+                  : canWithdrawUPI
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white'
+                    : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white cursor-not-allowed'
                   }`}
               >
                 {loading ? (
@@ -336,8 +338,8 @@ export default function WithdrawPage() {
                 onClick={() => setMethod('usdt')}
                 disabled={!canWithdrawUSDT || loading}
                 className={`w-full font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${canWithdrawUSDT
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white'
-                    : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white cursor-not-allowed'
+                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white'
+                  : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white cursor-not-allowed'
                   }`}
               >
                 {loading ? (

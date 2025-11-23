@@ -44,8 +44,10 @@ export default function VouchersPage() {
   const fetchUser = async () => {
     try {
       const response = await fetch('/api/auth/me');
-      if (response.status === 401) {
-        router.push('/login');
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 404) {
+          router.push('/login');
+        }
         return;
       }
       const data = await response.json();
@@ -85,10 +87,10 @@ export default function VouchersPage() {
       }
 
       const data = await response.json();
-      
+
       // Update local state
-      setVouchers(prev => prev.map(v => 
-        v.id === voucherId 
+      setVouchers(prev => prev.map(v =>
+        v.id === voucherId
           ? { ...v, status: data.voucher.status, scratchedAt: data.voucher.scratchedAt }
           : v
       ));
@@ -122,14 +124,14 @@ export default function VouchersPage() {
       }
 
       const data = await response.json();
-      
+
       // Find the voucher to get the amount
       const voucher = vouchers.find(v => v.id === voucherId);
       const redeemedAmount = voucher?.amount || data.voucher.amount;
-      
+
       // Update local state
-      setVouchers(prev => prev.map(v => 
-        v.id === voucherId 
+      setVouchers(prev => prev.map(v =>
+        v.id === voucherId
           ? { ...v, status: 'redeemed', redeemedAt: data.voucher.redeemedAt }
           : v
       ));
@@ -144,7 +146,7 @@ export default function VouchersPage() {
 
       // Refresh user balance from server to ensure accuracy
       await fetchUser();
-      
+
       alert(data.message || `Successfully redeemed ₹${redeemedAmount.toLocaleString('en-IN')}!`);
     } catch (error) {
       console.error('Error redeeming voucher:', error);
@@ -256,7 +258,7 @@ export default function VouchersPage() {
                   Current Balance
                 </h2>
                 <p className="text-2xl sm:text-3xl font-bold">
-                  ₹{user.balance.toLocaleString('en-IN')}
+                  ₹{user.balance?.toLocaleString('en-IN') || '0.00'}
                 </p>
               </div>
             )}
@@ -333,8 +335,8 @@ export default function VouchersPage() {
                       reason={voucher.reason}
                       voucherId={voucher.id}
                       status={voucher.status}
-                      onScratch={() => {}}
-                      onRedeem={() => {}}
+                      onScratch={() => { }}
+                      onRedeem={() => { }}
                     />
                   ))}
                 </div>

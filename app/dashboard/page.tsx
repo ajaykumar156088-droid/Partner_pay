@@ -54,8 +54,10 @@ export default function DashboardPage() {
   const fetchUser = async () => {
     try {
       const response = await fetch('/api/auth/me');
-      if (response.status === 401) {
-        router.push('/login');
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 404) {
+          router.push('/login');
+        }
         return;
       }
       const data = await response.json();
@@ -122,7 +124,7 @@ export default function DashboardPage() {
               <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
                 Account Dashboard
               </h1>
-                <p className="text-base text-gray-600 dark:text-gray-400">
+              <p className="text-base text-gray-600 dark:text-gray-400">
                 Welcome back! Here&apos;s your account overview.
               </p>
             </div>
@@ -132,32 +134,29 @@ export default function DashboardPage() {
                 <span className="text-sm font-semibold text-green-700 dark:text-green-400">Account Active</span>
               </div>
               {user && (user.balance || 0) >= 1000 && (
-                <div className={`flex items-center space-x-2 px-4 py-2 rounded-lg border shadow-sm ${
-                  user.authenticationStatus === 'authenticated'
+                <div className={`flex items-center space-x-2 px-4 py-2 rounded-lg border shadow-sm ${user.authenticationStatus === 'authenticated'
                     ? 'bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 border-green-200 dark:border-green-800'
                     : user.authenticationStatus === 'pending'
-                    ? 'bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/30 dark:to-amber-900/30 border-yellow-200 dark:border-yellow-800'
-                    : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
-                }`}>
-                  <div className={`w-2.5 h-2.5 rounded-full shadow-sm ${
-                    user.authenticationStatus === 'authenticated'
+                      ? 'bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/30 dark:to-amber-900/30 border-yellow-200 dark:border-yellow-800'
+                      : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
+                  }`}>
+                  <div className={`w-2.5 h-2.5 rounded-full shadow-sm ${user.authenticationStatus === 'authenticated'
                       ? 'bg-green-500 animate-pulse shadow-green-500/50'
                       : user.authenticationStatus === 'pending'
-                      ? 'bg-yellow-500 animate-pulse shadow-yellow-500/50'
-                      : 'bg-gray-400'
-                  }`}></div>
-                  <span className={`text-sm font-semibold ${
-                    user.authenticationStatus === 'authenticated'
+                        ? 'bg-yellow-500 animate-pulse shadow-yellow-500/50'
+                        : 'bg-gray-400'
+                    }`}></div>
+                  <span className={`text-sm font-semibold ${user.authenticationStatus === 'authenticated'
                       ? 'text-green-700 dark:text-green-400'
                       : user.authenticationStatus === 'pending'
-                      ? 'text-yellow-700 dark:text-yellow-400'
-                      : 'text-gray-700 dark:text-gray-400'
-                  }`}>
+                        ? 'text-yellow-700 dark:text-yellow-400'
+                        : 'text-gray-700 dark:text-gray-400'
+                    }`}>
                     {user.authenticationStatus === 'authenticated'
                       ? 'Authenticated'
                       : user.authenticationStatus === 'pending'
-                      ? 'Auth Pending'
-                      : 'Not Authenticated'}
+                        ? 'Auth Pending'
+                        : 'Not Authenticated'}
                   </span>
                 </div>
               )}
@@ -166,7 +165,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Authentication Warning Banner */}
-  {user && (user.balance || 0) >= 1000 && user.authenticationStatus !== 'authenticated' && !showUnderReview && (
+        {user && (user.balance || 0) >= 1000 && user.authenticationStatus !== 'authenticated' && !showUnderReview && (
           <div className="mb-6 sm:mb-8 p-5 sm:p-6 bg-gradient-to-r from-yellow-50 via-amber-50 to-orange-50 dark:from-yellow-900/30 dark:via-amber-900/30 dark:to-orange-900/30 rounded-2xl border-l-4 border-yellow-500 dark:border-yellow-400 shadow-lg animate-slide-up">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-start space-x-4 flex-1">
@@ -217,7 +216,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <p className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-1">
-                ₹{user?.balance.toLocaleString('en-IN') || '0.00'}
+                ₹{user?.balance?.toLocaleString('en-IN') || '0.00'}
               </p>
               <p className="text-xs text-blue-100/80">Available for withdrawal</p>
             </div>
@@ -336,21 +335,19 @@ export default function DashboardPage() {
                             </div>
                           </td>
                           <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
-                            <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm ${
-                              transaction.type === 'admin_add' || transaction.type === 'voucher_redeemed'
+                            <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm ${transaction.type === 'admin_add' || transaction.type === 'voucher_redeemed'
                                 ? 'bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/50 dark:to-emerald-900/50 text-green-800 dark:text-green-300 border border-green-200 dark:border-green-800'
                                 : transaction.type === 'admin_deduct'
-                                ? 'bg-gradient-to-r from-red-100 to-rose-100 dark:from-red-900/50 dark:to-rose-900/50 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800'
-                                : 'bg-gradient-to-r from-yellow-100 to-amber-100 dark:from-yellow-900/50 dark:to-amber-900/50 text-yellow-800 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-800'
-                            }`}>
+                                  ? 'bg-gradient-to-r from-red-100 to-rose-100 dark:from-red-900/50 dark:to-rose-900/50 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800'
+                                  : 'bg-gradient-to-r from-yellow-100 to-amber-100 dark:from-yellow-900/50 dark:to-amber-900/50 text-yellow-800 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-800'
+                              }`}>
                               {transaction.type === 'voucher_redeemed' ? 'Voucher Redeemed' : transaction.type.replace('_', ' ').toUpperCase()}
                             </span>
                           </td>
-                          <td className={`px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-bold ${
-                            transaction.amount >= 0
+                          <td className={`px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-bold ${transaction.amount >= 0
                               ? 'text-green-600 dark:text-green-400'
                               : 'text-red-600 dark:text-red-400'
-                          }`}>
+                            }`}>
                             <span className="flex items-center">
                               {transaction.amount >= 0 ? (
                                 <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
