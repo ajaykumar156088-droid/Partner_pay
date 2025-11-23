@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifySession } from '@/lib/auth';
-import { readJSON, writeJSON, type VouchersData, type UsersData, type TransactionsData } from '@/lib/db';
+import { getVoucher, updateVoucher, getUser, updateUser, createTransaction } from '@/lib/db';
 import { v4 as uuidv4 } from 'uuid';
 
 export const runtime = 'nodejs';
@@ -23,8 +23,7 @@ export async function POST(
 
     const { id } = await params;
 
-    const vouchersData = await readJSON<VouchersData>('vouchers.json');
-    const voucher = vouchersData.vouchers?.find(v => v.id === id);
+    const voucher = await getVoucher(id);
 
     if (!voucher) {
       return NextResponse.json({ error: 'Voucher not found' }, { status: 404 });
@@ -44,23 +43,18 @@ export async function POST(
       voucher.scratchedAt = new Date().toISOString();
     } else if (voucher.status === 'scratched') {
       // Redeem the voucher - add amount to user balance
-      const usersData = await readJSON<UsersData>('users.json');
-      const user = usersData.users?.find(u => u.id === session.userId);
-      
+      const user = await getUser(session.userId);
+
       if (!user) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
       }
 
       // Update user balance
       user.balance = (user.balance || 0) + voucher.amount;
-      await writeJSON('users.json', usersData);
+      await updateUser(user);
 
       // Create transaction record
-      const transactionsData = await readJSON<TransactionsData>('transactions.json');
-      if (!transactionsData.transactions) {
-        transactionsData.transactions = [];
-      }
-      transactionsData.transactions.push({
+      await createTransaction({
         id: uuidv4(),
         userId: session.userId,
         amount: voucher.amount,
@@ -68,19 +62,18 @@ export async function POST(
         details: `Voucher redeemed: ${voucher.reason}`,
         timestamp: new Date().toISOString(),
       });
-      await writeJSON('transactions.json', transactionsData);
 
       // Update voucher to redeemed
       voucher.status = 'redeemed';
       voucher.redeemedAt = new Date().toISOString();
     }
 
-    await writeJSON('vouchers.json', vouchersData);
+    await updateVoucher(voucher);
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       voucher,
-      message: voucher.status === 'redeemed' 
-        ? `Successfully redeemed ₹${voucher.amount}!` 
+      message: voucher.status === 'redeemed'
+        ? `Successfully redeemed ₹${voucher.amount}!`
         : 'Voucher scratched successfully!'
     });
   } catch (error) {

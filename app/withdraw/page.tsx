@@ -119,7 +119,7 @@ export default function WithdrawPage() {
         <div className="mb-6">
           <BackButton href="/dashboard" label="Back to Dashboard" />
         </div>
-        
+
         <div className="mb-8 animate-slide-up">
           <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
             Withdraw Funds
@@ -239,25 +239,16 @@ export default function WithdrawPage() {
                 </h3>
               </div>
             </div>
-            <div className="mb-5 p-4 bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-xl border border-yellow-200 dark:border-yellow-800">
-              <div className="flex items-center space-x-2">
-                <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <p className="text-sm font-semibold text-yellow-800 dark:text-yellow-300">
-                  Minimum withdrawal limit: ₹2,500
-                </p>
-              </div>
-            </div>
-            
+
+
             {!canWithdrawUPI && (
               <div className="mb-5 p-4 bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-xl border-l-4 border-yellow-500">
                 <p className="text-sm font-medium text-yellow-800 dark:text-yellow-300">
-                  {!hasMinimumBalanceForUPI 
+                  {!hasMinimumBalanceForUPI
                     ? 'Minimum UPI withdrawal limit is ₹2,500.'
-                    : !isAuthenticated 
-                    ? 'Minimum UPI withdrawal limit is ₹2,500. Please authenticate your account first.'
-                    : 'Minimum UPI withdrawal limit is ₹2,500.'}
+                    : !isAuthenticated
+                      ? 'Minimum UPI withdrawal limit is ₹2,500. Please authenticate your account first.'
+                      : 'Minimum UPI withdrawal limit is ₹2,500.'}
                 </p>
               </div>
             )}
@@ -281,13 +272,12 @@ export default function WithdrawPage() {
                 type="submit"
                 onClick={() => setMethod('upi')}
                 disabled={!canWithdrawUPI || loading}
-                className={`w-full font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${
-                  hasMinimumBalanceForUPI && !isAuthenticated
+                className={`w-full font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${hasMinimumBalanceForUPI && !isAuthenticated
                     ? 'bg-gradient-to-r from-gray-400 to-gray-500 text-white cursor-not-allowed'
                     : canWithdrawUPI
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white'
-                    : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white cursor-not-allowed'
-                }`}
+                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white'
+                      : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white cursor-not-allowed'
+                  }`}
               >
                 {loading ? (
                   <span className="flex items-center justify-center">
@@ -316,17 +306,8 @@ export default function WithdrawPage() {
                 </h3>
               </div>
             </div>
-            <div className="mb-5 p-4 bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-xl border border-yellow-200 dark:border-yellow-800">
-              <div className="flex items-center space-x-2">
-                <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <p className="text-sm font-semibold text-yellow-800 dark:text-yellow-300">
-                  Minimum withdrawal limit: ₹500
-                </p>
-              </div>
-            </div>
-            
+
+
             {!canWithdrawUSDT && (
               <div className="mb-5 p-4 bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-xl border-l-4 border-yellow-500">
                 <p className="text-sm font-medium text-yellow-800 dark:text-yellow-300">
@@ -354,11 +335,10 @@ export default function WithdrawPage() {
                 type="submit"
                 onClick={() => setMethod('usdt')}
                 disabled={!canWithdrawUSDT || loading}
-                className={`w-full font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${
-                  canWithdrawUSDT
+                className={`w-full font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${canWithdrawUSDT
                     ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white'
                     : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white cursor-not-allowed'
-                }`}
+                  }`}
               >
                 {loading ? (
                   <span className="flex items-center justify-center">

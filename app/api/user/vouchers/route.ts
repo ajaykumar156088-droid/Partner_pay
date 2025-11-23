@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifySession } from '@/lib/auth';
-import { readJSON, type VouchersData } from '@/lib/db';
+import { getUserVouchers } from '@/lib/db';
 
 export const runtime = 'nodejs';
 
@@ -17,11 +17,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const vouchersData = await readJSON<VouchersData>('vouchers.json');
-    const vouchers = (vouchersData.vouchers || []).filter(v => v.userId === session.userId);
-
-    // Sort by creation date (newest first)
-    vouchers.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    const vouchers = await getUserVouchers(session.userId);
 
     return NextResponse.json({ vouchers });
   } catch (error) {

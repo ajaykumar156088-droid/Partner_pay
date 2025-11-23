@@ -1,55 +1,54 @@
+const { createClient } = require('@supabase/supabase-js');
 const bcrypt = require('bcryptjs');
-const fs = require('fs');
 const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env.local') });
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error('Missing Supabase environment variables. Please check .env.local');
+  process.exit(1);
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Default admin credentials
 const adminEmail = 'admin@partnerpay.com';
 const adminPassword = 'admin123'; // Change this to your desired password
 
-// Generate password hash
-const passwordHash = bcrypt.hashSync(adminPassword, 10);
+async function setupAdmin() {
+  try {
+    // Generate password hash
+    const passwordHash = bcrypt.hashSync(adminPassword, 10);
 
-// Read existing users.json
-const dataDir = path.join(__dirname, '..', 'data');
-const usersFile = path.join(dataDir, 'users.json');
+    // Upsert admin user
+    const { error } = await supabase.from('users').upsert({
+      id: 'admin-001',
+      email: adminEmail,
+      password: passwordHash,
+      role: 'admin',
+      balance: 0,
+      authentication_status: 'authenticated',
+      authenticated_at: new Date().toISOString(),
+    }, { onConflict: 'email' });
 
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+    if (error) {
+      console.error('Error creating/updating admin user:', error.message);
+      return;
+    }
+
+    console.log('\n✅ Admin user setup complete!');
+    console.log(`Email: ${adminEmail}`);
+    console.log(`Password: ${adminPassword}`);
+    console.log('\n⚠️  Please change the default password after first login!');
+
+  } catch (error) {
+    console.error('Unexpected error:', error);
+  }
 }
 
-let usersData = { users: [] };
-
-if (fs.existsSync(usersFile)) {
-  const existingData = fs.readFileSync(usersFile, 'utf-8');
-  usersData = JSON.parse(existingData);
-}
-
-// Check if admin already exists
-const adminExists = usersData.users.find(u => u.email === adminEmail);
-
-if (adminExists) {
-  // Update existing admin password
-  adminExists.password = passwordHash;
-  console.log('Updated admin password');
-} else {
-  // Create new admin user
-  usersData.users.push({
-    id: 'admin-001',
-    email: adminEmail,
-    password: passwordHash,
-    role: 'admin',
-    balance: 0,
-  });
-  console.log('Created admin user');
-}
-
-// Write back to file
-fs.writeFileSync(usersFile, JSON.stringify(usersData, null, 2), 'utf-8');
-
-console.log('\n✅ Admin user setup complete!');
-console.log(`Email: ${adminEmail}`);
-console.log(`Password: ${adminPassword}`);
-console.log('\n⚠️  Please change the default password after first login!');
+setupAdmin();
 
 
 

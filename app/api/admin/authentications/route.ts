@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifySession } from '@/lib/auth';
-import { readJSON, writeJSON, type UsersData } from '@/lib/db';
+import { getUsers, getUser, updateUser } from '@/lib/db';
 
 export const runtime = 'nodejs';
 
@@ -17,8 +17,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    const usersData = await readJSON<UsersData>('users.json');
-    const pendingUsers = (usersData.users || []).filter(
+    const users = await getUsers();
+    const pendingUsers = users.filter(
       u => u.role === 'user' && u.authenticationStatus === 'pending' && (u.balance || 0) >= 1000
     );
 
@@ -49,8 +49,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
     }
 
-    const usersData = await readJSON<UsersData>('users.json');
-    const user = usersData.users?.find(u => u.id === userId);
+    const user = await getUser(userId);
 
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
@@ -64,7 +63,7 @@ export async function POST(request: NextRequest) {
       user.authenticatedAt = undefined;
     }
 
-    await writeJSON('users.json', usersData);
+    await updateUser(user);
 
     return NextResponse.json({
       message: `Authentication ${action === 'approve' ? 'approved' : 'rejected'} successfully`,

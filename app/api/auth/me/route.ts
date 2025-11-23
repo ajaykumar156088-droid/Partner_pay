@@ -1,29 +1,28 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
-import { readJSON, UsersData } from '@/lib/db';
+import { getUser } from '@/lib/db';
 
 export const runtime = 'nodejs';
 
 export async function GET() {
   const session = await getSession();
-  
+
   if (!session) {
     return NextResponse.json(
       { error: 'Unauthorized' },
       { status: 401 }
     );
   }
-  
-  const data = await readJSON<UsersData>('users.json');
-  const user = data.users?.find(u => u.id === session.userId);
-  
+
+  const user = await getUser(session.userId);
+
   if (!user) {
     return NextResponse.json(
       { error: 'User not found' },
       { status: 404 }
     );
   }
-  
+
   return NextResponse.json({
     id: user.id,
     email: user.email,

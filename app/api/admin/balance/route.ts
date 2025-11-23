@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
-import { readJSON, writeJSON, UsersData, TransactionsData, Transaction } from '@/lib/db';
+import { getUser, updateUser, createTransaction, Transaction } from '@/lib/db';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
@@ -15,31 +15,27 @@ const balanceSchema = z.object({
 
 export async function POST(request: NextRequest) {
   const session = await getSession();
-  
+
   if (!session || session.role !== 'admin') {
     return NextResponse.json(
       { error: 'Unauthorized' },
       { status: 401 }
     );
   }
-  
+
   try {
     const body = await request.json();
     const { userId, amount, type, details } = balanceSchema.parse(body);
-    
-    const usersData = await readJSON<UsersData>('users.json');
-    const users = usersData.users || [];
-    const userIndex = users.findIndex(u => u.id === userId);
-    
-    if (userIndex === -1) {
+
+    const user = await getUser(userId);
+
+    if (!user) {
       return NextResponse.json(
         { error: 'User not found' },
         { status: 404 }
       );
     }
-    
-    const user = users[userIndex];
-    
+
     if (type === 'add') {
       user.balance += amount;
     } else {
@@ -51,13 +47,9 @@ export async function POST(request: NextRequest) {
       }
       user.balance -= amount;
     }
-    
-    await writeJSON<UsersData>('users.json', { users });
-    
-    // Create transaction record
-    const transactionsData = await readJSON<TransactionsData>('transactions.json');
-    const transactions = transactionsData.transactions || [];
-    
+
+    await updateUser(user);
+
     const transaction: Transaction = {
       id: uuidv4(),
       userId,
@@ -66,10 +58,9 @@ export async function POST(request: NextRequest) {
       details: details || `Admin ${type === 'add' ? 'added' : 'deducted'} balance`,
       timestamp: new Date().toISOString(),
     };
-    
-    transactions.push(transaction);
-    await writeJSON<TransactionsData>('transactions.json', { transactions });
-    
+
+    await createTransaction(transaction);
+
     return NextResponse.json({
       success: true,
       user: {
@@ -85,7 +76,7 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    
+
     console.error('Balance update error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },

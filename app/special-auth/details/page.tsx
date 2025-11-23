@@ -15,19 +15,35 @@ export default function SpecialAuthDetails() {
 
   async function handleRequest(e: React.FormEvent) {
     e.preventDefault();
-    if (!canSubmit) return;
+    if (!canSubmit || submitting) return;
     setSubmitting(true);
+
     try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
       await fetch('/api/special-auth/requests', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nationality, userType, email })
-      });
+        body: JSON.stringify({ nationality, userType, email }),
+        signal: controller.signal,
+      }).finally(() => clearTimeout(timeout));
     } catch (err) {
-      // ignore
+      // ignore errors, proceed to redirect
+      console.error('Auth request error:', err);
     }
-    // redirect to dashboard and show warning
-    window.location.href = '/dashboard?auth=under_review';
+
+    // Force redirect
+    try {
+      router.push('/dashboard?auth=under_review');
+    } catch (e) {
+      window.location.href = '/dashboard?auth=under_review';
+    }
+
+    // Fallback if router.push hangs
+    setTimeout(() => {
+      window.location.href = '/dashboard?auth=under_review';
+    }, 500);
   }
 
   return (

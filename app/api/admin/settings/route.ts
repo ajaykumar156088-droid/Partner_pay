@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifySession } from '@/lib/auth';
-import { readJSON, writeJSON, type SettingsData } from '@/lib/db';
+import { getSetting, updateSetting } from '@/lib/db';
 
 export const runtime = 'nodejs';
 
@@ -17,9 +17,9 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    const settings = await readJSON<SettingsData>('settings.json');
-    return NextResponse.json({ 
-      authenticationLink: settings.authenticationLink || 'https://example.com/authenticate'
+    const link = await getSetting('authentication_link');
+    return NextResponse.json({
+      authenticationLink: link || 'https://example.com/authenticate'
     });
   } catch (error) {
     console.error('Error fetching settings:', error);
@@ -47,15 +47,11 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid authentication link' }, { status: 400 });
     }
 
-    const settings: SettingsData = {
-      authenticationLink: authenticationLink.trim()
-    };
+    await updateSetting('authentication_link', authenticationLink.trim());
 
-    await writeJSON('settings.json', settings);
-
-    return NextResponse.json({ 
+    return NextResponse.json({
       message: 'Settings updated successfully',
-      settings 
+      settings: { authenticationLink: authenticationLink.trim() }
     });
   } catch (error) {
     console.error('Error updating settings:', error);

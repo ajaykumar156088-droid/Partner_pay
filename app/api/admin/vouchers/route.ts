@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifySession } from '@/lib/auth';
-import { readJSON, writeJSON, type VouchersData, type UsersData, type TransactionsData } from '@/lib/db';
+import { getVouchers, getUserVouchers, getUser, createVoucher, Voucher } from '@/lib/db';
 import { v4 as uuidv4 } from 'uuid';
 
 export const runtime = 'nodejs';
@@ -21,15 +21,12 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
 
-    const vouchersData = await readJSON<VouchersData>('vouchers.json');
-    let vouchers = vouchersData.vouchers || [];
-
+    let vouchers: Voucher[];
     if (userId) {
-      vouchers = vouchers.filter(v => v.userId === userId);
+      vouchers = await getUserVouchers(userId);
+    } else {
+      vouchers = await getVouchers();
     }
-
-    // Sort by creation date (newest first)
-    vouchers.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
     return NextResponse.json({ vouchers });
   } catch (error) {
@@ -61,16 +58,15 @@ export async function POST(request: NextRequest) {
 
     // If userId provided, verify user exists
     if (userId) {
-      const usersData = await readJSON<UsersData>('users.json');
-      const user = usersData.users?.find(u => u.id === userId);
+      const user = await getUser(userId);
       if (!user) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
       }
     }
 
     // If code is provided, ensure it's unique
-    const vouchersData = await readJSON<VouchersData>('vouchers.json');
-    const existing = (vouchersData.vouchers || []).find(v => v.code && code && v.code.toLowerCase() === String(code).toLowerCase());
+    const allVouchers = await getVouchers();
+    const existing = allVouchers.find(v => v.code && code && v.code.toLowerCase() === String(code).toLowerCase());
     if (code && existing) {
       return NextResponse.json({ error: 'Code already exists' }, { status: 400 });
     }
@@ -87,11 +83,7 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString(),
       createdBy: session.userId,
     };
-    if (!vouchersData.vouchers) {
-      vouchersData.vouchers = [];
-    }
-    vouchersData.vouchers.push(voucher);
-    await writeJSON('vouchers.json', vouchersData);
+    await createVoucher(voucher);
 
     return NextResponse.json({ voucher }, { status: 201 });
   } catch (error) {

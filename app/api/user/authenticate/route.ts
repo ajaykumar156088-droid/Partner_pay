@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifySession } from '@/lib/auth';
-import { readJSON, writeJSON, type UsersData, type SettingsData } from '@/lib/db';
+import { getSetting, getUser, updateUser } from '@/lib/db';
 
 export const runtime = 'nodejs';
 
@@ -17,9 +17,9 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const settings = await readJSON<SettingsData>('settings.json');
-    return NextResponse.json({ 
-      authenticationLink: settings.authenticationLink || 'https://example.com/authenticate'
+    const link = await getSetting('authentication_link');
+    return NextResponse.json({
+      authenticationLink: link || 'https://example.com/authenticate'
     });
   } catch (error) {
     console.error('Error fetching authentication link:', error);
@@ -47,9 +47,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid status' }, { status: 400 });
     }
 
-    const usersData = await readJSON<UsersData>('users.json');
-    const user = usersData.users?.find(u => u.id === session.userId);
-    
+    const user = await getUser(session.userId);
+
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
@@ -59,9 +58,9 @@ export async function POST(request: NextRequest) {
       user.authenticatedAt = new Date().toISOString();
     }
 
-    await writeJSON('users.json', usersData);
+    await updateUser(user);
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       message: 'Authentication status updated',
       user: {
         id: user.id,

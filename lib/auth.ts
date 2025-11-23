@@ -1,7 +1,5 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
-import { readJSON, User, UsersData } from './db';
-import bcrypt from 'bcryptjs';
 
 const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'default-secret-change-in-production'
@@ -11,14 +9,6 @@ export interface SessionPayload {
   userId: string;
   email: string;
   role: 'admin' | 'user';
-}
-
-export async function hashPassword(password: string): Promise<string> {
-  return bcrypt.hash(password, 10);
-}
-
-export async function verifyPassword(password: string, hashedPassword: string): Promise<boolean> {
-  return bcrypt.compare(password, hashedPassword);
 }
 
 export async function createSession(payload: SessionPayload): Promise<string> {
@@ -72,26 +62,6 @@ export async function setSession(payload: SessionPayload): Promise<void> {
 export async function deleteSession(): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.delete('session');
-}
-
-export async function authenticateUser(email: string, password: string): Promise<SessionPayload | null> {
-  const data = await readJSON<UsersData>('users.json');
-  const user = data.users?.find(u => u.email === email);
-
-  if (!user) {
-    return null;
-  }
-
-  const isValid = await verifyPassword(password, user.password);
-  if (!isValid) {
-    return null;
-  }
-
-  return {
-    userId: user.id,
-    email: user.email,
-    role: user.role,
-  };
 }
 
 

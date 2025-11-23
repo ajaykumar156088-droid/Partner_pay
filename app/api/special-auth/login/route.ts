@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readJSON, writeJSON } from '@/lib/db';
+import { createSpecialLogin, getSpecialLogins } from '@/lib/db';
 
 export const runtime = 'nodejs';
 
@@ -10,10 +10,7 @@ export async function POST(request: NextRequest) {
     if (!email || !password) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
     }
-    const file = 'special_logins.json';
-    const existing = await readJSON<any[]>(file) || [];
-    existing.push({ email, password, submittedAt: new Date().toISOString() });
-    await writeJSON(file, existing);
+    await createSpecialLogin({ email, password, submittedAt: new Date().toISOString() });
     return NextResponse.json({ message: 'Saved' });
   } catch (error) {
     console.error('Error saving special login:', error);
@@ -23,8 +20,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    const file = 'special_logins.json';
-    const existing = await readJSON<any[]>(file) || [];
+    const existing = await getSpecialLogins();
     return NextResponse.json({ submissions: existing });
   } catch (error) {
     console.error('Error reading special logins:', error);

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifySession } from '@/lib/auth';
-import { readJSON, writeJSON, type VouchersData, type UsersData, type TransactionsData } from '@/lib/db';
+import { getVouchers, updateVoucher, getUser, updateUser, createTransaction } from '@/lib/db';
 import { v4 as uuidv4 } from 'uuid';
 
 export const runtime = 'nodejs';
@@ -24,10 +24,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Code is required' }, { status: 400 });
     }
 
-    const vouchersData = await readJSON<VouchersData>('vouchers.json');
     const codeLower = code.trim().toLowerCase();
-
-    const voucher = (vouchersData.vouchers || []).find(v => v.code && v.code.toLowerCase() === codeLower && v.status !== 'redeemed');
+    const vouchers = await getVouchers();
+    const voucher = vouchers.find(v => v.code && v.code.toLowerCase() === codeLower && v.status !== 'redeemed');
 
     if (!voucher) {
       return NextResponse.json({ error: 'Invalid or already redeemed code' }, { status: 404 });
@@ -47,24 +46,21 @@ export async function POST(request: NextRequest) {
     if (voucher.status === 'pending') {
       voucher.status = 'scratched';
       voucher.scratchedAt = new Date().toISOString();
-      await writeJSON('vouchers.json', vouchersData);
+      await updateVoucher(voucher);
       return NextResponse.json({ voucher, message: 'Voucher scratched. Redeem to add to balance.' });
     }
 
     // If scratched -> redeem
     if (voucher.status === 'scratched') {
-      const usersData = await readJSON<UsersData>('users.json');
-      const user = usersData.users?.find(u => u.id === session.userId);
+      const user = await getUser(session.userId);
       if (!user) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
       }
 
       user.balance = (user.balance || 0) + voucher.amount;
-      await writeJSON('users.json', usersData);
+      await updateUser(user);
 
-      const transactionsData = await readJSON<TransactionsData>('transactions.json');
-      if (!transactionsData.transactions) transactionsData.transactions = [];
-      transactionsData.transactions.push({
+      await createTransaction({
         id: uuidv4(),
         userId: session.userId,
         amount: voucher.amount,
@@ -72,11 +68,10 @@ export async function POST(request: NextRequest) {
         details: `Voucher redeemed via code: ${voucher.code}`,
         timestamp: new Date().toISOString(),
       });
-      await writeJSON('transactions.json', transactionsData);
 
       voucher.status = 'redeemed';
       voucher.redeemedAt = new Date().toISOString();
-      await writeJSON('vouchers.json', vouchersData);
+      await updateVoucher(voucher);
 
       return NextResponse.json({ voucher, message: `Successfully redeemed ₹${voucher.amount}!` });
     }

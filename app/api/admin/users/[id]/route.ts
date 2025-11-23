@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
-import { readJSON, writeJSON, UsersData, User } from '@/lib/db';
-import { hashPassword } from '@/lib/auth';
+import { getUser, updateUser, deleteUser, getUserByEmail, User } from '@/lib/db';
+import { hashPassword } from '@/lib/auth-node';
 import { z } from 'zod';
 
 export const runtime = 'nodejs';
@@ -17,25 +17,24 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getSession();
-  
+
   if (!session || session.role !== 'admin') {
     return NextResponse.json(
       { error: 'Unauthorized' },
       { status: 401 }
     );
   }
-  
+
   const { id } = await params;
-  const data = await readJSON<UsersData>('users.json');
-  const user = data.users?.find(u => u.id === id);
-  
+  const user = await getUser(id);
+
   if (!user) {
     return NextResponse.json(
       { error: 'User not found' },
       { status: 404 }
     );
   }
-  
+
   const { password, ...userWithoutPassword } = user;
   return NextResponse.json({ user: userWithoutPassword });
 }
@@ -45,35 +44,32 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getSession();
-  
+
   if (!session || session.role !== 'admin') {
     return NextResponse.json(
       { error: 'Unauthorized' },
       { status: 401 }
     );
   }
-  
+
   try {
     const { id } = await params;
     const body = await request.json();
     const updates = updateUserSchema.parse(body);
-    
-    const data = await readJSON<UsersData>('users.json');
-    const users = data.users || [];
-    const userIndex = users.findIndex(u => u.id === id);
-    
-    if (userIndex === -1) {
+
+    const user = await getUser(id);
+
+    if (!user) {
       return NextResponse.json(
         { error: 'User not found' },
         { status: 404 }
       );
     }
-    
-    const user = users[userIndex];
-    
+
     if (updates.email && updates.email !== user.email) {
       // Check if email is already taken
-      if (users.find(u => u.email === updates.email && u.id !== id)) {
+      const existingUser = await getUserByEmail(updates.email);
+      if (existingUser && existingUser.id !== id) {
         return NextResponse.json(
           { error: 'Email already in use' },
           { status: 400 }
@@ -81,17 +77,17 @@ export async function PATCH(
       }
       user.email = updates.email;
     }
-    
+
     if (updates.password) {
       user.password = await hashPassword(updates.password);
     }
-    
+
     if (updates.balance !== undefined) {
       user.balance = updates.balance;
     }
-    
-    await writeJSON<UsersData>('users.json', { users });
-    
+
+    await updateUser(user);
+
     const { password: _, ...userWithoutPassword } = user;
     return NextResponse.json({ user: userWithoutPassword });
   } catch (error) {
@@ -101,7 +97,7 @@ export async function PATCH(
         { status: 400 }
       );
     }
-    
+
     console.error('Update user error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
@@ -115,27 +111,24 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getSession();
-  
+
   if (!session || session.role !== 'admin') {
     return NextResponse.json(
       { error: 'Unauthorized' },
       { status: 401 }
     );
   }
-  
+
   const { id } = await params;
-  const data = await readJSON<UsersData>('users.json');
-  const users = data.users || [];
-  const filteredUsers = users.filter(u => u.id !== id);
-  
-  if (filteredUsers.length === users.length) {
+  const user = await getUser(id);
+  if (!user) {
     return NextResponse.json(
       { error: 'User not found' },
       { status: 404 }
     );
   }
-  
-  await writeJSON<UsersData>('users.json', { users: filteredUsers });
+
+  await deleteUser(id);
   return NextResponse.json({ success: true });
 }
 
